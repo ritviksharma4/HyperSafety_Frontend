@@ -87,6 +87,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(color: Colors.teal)),
+                  hintText: "New Employee ID",
                   hintStyle: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
                   labelText: "Employee ID",
                   labelStyle: TextStyle(fontSize: 24, color: Colors.black),
@@ -135,26 +136,35 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     label: "Submit",
                     color: Colors.red,
                     buttonType: ButtonType.RaisedButton,
-                    onPressed: () {
-                      setState(() {
-                        FocusScope.of(context).unfocus();
-                        padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 40.0);
-                        if (_empName.text.isNotEmpty &&
+                    onPressed: () async {
+                      if (_empName.text.isNotEmpty &&
                             _empId.text.isNotEmpty &&
                             _isImagePicked) {
-                            var reponse = upload_image(File(_imageFile!.path), _empName.text, _empId.text);
-                            showSnackBar(context, "Successfully added employee.", Colors.green);
-                            reset_screen();
-                        } else {
+                            var node_response = await upload_image(File(_imageFile!.path), _empName.text, _empId.text);
+                            if (node_response == "Successful") {
+                              showSnackBar(context, "Successfully Added Employee.", Colors.green);
+                              reset_screen();
+                            }
+                            else {
+                                showSnackBar(context,
+                                  node_response, Colors.red);
+                            }
+                        } 
+                        else {
                           if (_empName.text.isEmpty) {
                             showSnackBar(context, "Name Field is Required.", Colors.red);
-                          } else if (_empId.text.isEmpty) {
+                          } 
+                          else if (_empId.text.isEmpty) {
                             showSnackBar(context, "Employee ID is Required.", Colors.red);
-                          } else if (_isImagePicked == false) {
+                          } 
+                          else if (_isImagePicked == false) {
                             showSnackBar(
                                 context, "Employee Image is Required.", Colors.red);
                           }
                         }
+                      setState(() {
+                        FocusScope.of(context).unfocus();
+                        padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 40.0);
                         Future.delayed(const Duration(seconds: 3), () {
                           setState(() {
                             padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
@@ -184,7 +194,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       child: Column(
         children: <Widget>[
           Text(
-            "Choose Employee photo",
+            "Choose Employee's Photo",
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.0,
@@ -224,26 +234,20 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       Navigator.pop(context);
     });
   }
-  adjust_submit_padding() {
-    print("hi");
-    setState(() {
-      padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
-    });
-    // padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
-  }
+
   void showSnackBar(BuildContext context, String text, Color status) {
     final snackBar = SnackBar(
       content: Text(text, textScaleFactor: 1.3,),
       backgroundColor: status,
       duration: Duration(seconds: 2, milliseconds: 560), //default is 4s
     );
-    // Find the Scaffold in the widget tree and use it to show a SnackBar.
     ScaffoldMessenger.of(context)
     .showSnackBar(snackBar)
     .closed.then((reason) => 
     padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
     );
   }
+
   void reset_screen(){
     _empName.clear();
     _empId.clear();

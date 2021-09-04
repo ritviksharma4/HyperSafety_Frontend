@@ -102,21 +102,22 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                               print(response);
                               if (response == "Successful") {
                                 showSnackBar(context,
-                                  "Successfully removed employee.", Colors.green);
+                                  "Successfully Removed Employee.", Colors.green);
+                                reset_screen();
                               }
                               else {
                                 showSnackBar(context,
                                   response, Colors.red);
                               }
-                          reset_screen();
                         } else {
-                          if (_empName.text.isEmpty) {
-                            showSnackBar(
-                                context, "Name Field is Required.", Colors.red);
-                          } else if (_empId.text.isEmpty) {
-                            showSnackBar(context, "Employee ID is Required.",
-                                Colors.red);
-                          }
+                            if (_empName.text.isEmpty) {
+                              showSnackBar(
+                                  context, "Name Field is Required.", Colors.red);
+                            } 
+                            else if (_empId.text.isEmpty) {
+                              showSnackBar(context, "Employee ID is Required.",
+                                  Colors.red);
+                            }
                         }
                       setState(() {
                         FocusScope.of(context).unfocus();

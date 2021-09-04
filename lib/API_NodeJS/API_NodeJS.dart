@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, file_names, import_of_legacy_library_into_null_safe, unused_import, deprecated_member_use, unused_local_variable, non_constant_identifier_names, duplicate_import
+// ignore_for_file: avoid_print, file_names, import_of_legacy_library_into_null_safe, unused_import, deprecated_member_use, unused_local_variable, non_constant_identifier_names, duplicate_import, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'dart:ffi';
@@ -29,11 +29,14 @@ upload_image(File imageFile, String empName, String empId) async {
 
     var response = await request.send();
     print(response.statusCode);
-
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
+    if (response.statusCode != 200) {
+      var error_message = response.stream.bytesToString();
+      return error_message;
     }
-  );
+    else {
+      var success_message = "Successful";
+    return success_message;
+  }
 }
 
 delete_image(String empName, String empId) async {
@@ -43,12 +46,16 @@ delete_image(String empName, String empId) async {
   request.headers.addAll(<String, String> {
     "Content-Type": "application/json",
   });
+
   request.body = body;
+
   final response = await request.send();
   if (response.statusCode != 200) {
-    return response.stream.bytesToString();
+    var error_message = response.stream.bytesToString();
+    return error_message;
   }
   else {
-    return "Successful";
+    var success_message = "Successful";
+    return success_message;
   }
 }

@@ -17,7 +17,7 @@ upload_image(File imageFile, String empName, String empId) async {
     var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    var uri = Uri.parse("http://192.168.29.30:7091/api/employee_services");
+    var uri = Uri.parse("http://192.168.0.221:7091/api/employee_services");
 
     var request = http.MultipartRequest("POST", uri);
     request.fields["empName"] = empName;
@@ -40,7 +40,7 @@ upload_image(File imageFile, String empName, String empId) async {
 }
 
 delete_image(String empName, String empId) async {
-  var uri = Uri.parse("http://192.168.29.30:7091/api/employee_services");
+  var uri = Uri.parse("http://192.168.0.221:7091/api/employee_services");
   var body = jsonEncode({"empName" : empName, "empId" : empId});
   final request = http.Request("DELETE", uri);
   request.headers.addAll(<String, String> {

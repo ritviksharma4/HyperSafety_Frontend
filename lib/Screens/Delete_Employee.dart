@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
@@ -56,6 +57,10 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                   fillColor: Colors.grey[400],
                   filled: true,
                 ),
+                inputFormatters: [
+                  WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),                 
+                  BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
+                ],
               ),
               Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -78,6 +83,9 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                   fillColor: Colors.grey[400],
                   filled: true,
                 ),
+                inputFormatters: [              
+                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                ],
               ),
               Spacer(),
               AnimatedContainer(
@@ -98,7 +106,7 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                     onPressed: () async {
                       if (_empName.text.isNotEmpty &&
                             _empId.text.isNotEmpty) {
-                              var response = await delete_image(_empName.text, _empId.text);
+                              var response = await delete_image(_empName.text.trimRight(), _empId.text.trimRight());
                               print(response);
                               if (response == "Successful") {
                                 showSnackBar(context,

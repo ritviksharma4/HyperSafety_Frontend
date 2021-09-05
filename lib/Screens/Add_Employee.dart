@@ -1,20 +1,25 @@
 // ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label
 
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
+
   @override
   _AddEmployeeScreenState createState() => _AddEmployeeScreenState();
 }
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+
+  RegExp reg_exp = RegExp(r"(\w+)");
 
   PickedFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
@@ -72,6 +77,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   fillColor: Colors.grey[400],
                   filled: true,
                 ),
+                inputFormatters: [
+                  WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),                 
+                  BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
+                ],
+
               ),
               Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -94,6 +104,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   fillColor: Colors.grey[400],
                   filled: true,
                 ),
+                  inputFormatters: [              
+                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                ],
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
@@ -140,7 +153,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       if (_empName.text.isNotEmpty &&
                             _empId.text.isNotEmpty &&
                             _isImagePicked) {
-                            var node_response = await upload_image(File(_imageFile!.path), _empName.text, _empId.text);
+                            var node_response = await upload_image(File(_imageFile!.path), _empName.text.trimRight(), _empId.text.trimRight());
                             if (node_response == "Successful") {
                               showSnackBar(context, "Successfully Added Employee.", Colors.green);
                               reset_screen();

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
 
 class ResetRecordsScreen extends StatefulWidget {
@@ -52,6 +53,10 @@ class _ResetRecordsScreenState extends State<ResetRecordsScreen> {
                   fillColor: Colors.grey[400],
                   filled: true,
                 ),
+                inputFormatters: [
+                  WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),                 
+                  BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
+                ],
               ),
               Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -74,6 +79,9 @@ class _ResetRecordsScreenState extends State<ResetRecordsScreen> {
                   fillColor: Colors.grey[400],
                   filled: true,
                 ),
+                inputFormatters: [              
+                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                ],
               ),
               Spacer(),
               AnimatedContainer(

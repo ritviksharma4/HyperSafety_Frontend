@@ -1,14 +1,16 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, non_constant_identifier_names, unnecessary_this, unnecessary_string_interpolations, avoid_print
+// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, non_constant_identifier_names, unnecessary_this, unnecessary_string_interpolations, avoid_print, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
-import 'package:hr_tech_solutions/Sample_Employees/Sample_Employees.dart';
 import 'package:hr_tech_solutions/Widgets/Scrollable_Widget.dart';
 import 'package:hr_tech_solutions/Widgets/Tab_Bar_Widget.dart';
 import 'package:hr_tech_solutions/Screens/Sortable_Screen.dart';
+
+// import 'package:hr_tech_solutions/Employees_List/Sample_Employees.dart';
+import 'package:hr_tech_solutions/Employees_List/Employees_List.dart';
 
 
 class FetchEmployeeRecordScreen extends StatefulWidget {
@@ -25,10 +27,15 @@ class _FetchEmployeeRecordScreenState extends State<FetchEmployeeRecordScreen> {
   int? sortColumnIndex;
   bool isAscending = false;
 
+  // List all_employees = <Employee> [];
+
   @override
   void initState() {
     super.initState();
 
+    Employee new_emp = Employee( emp_name: 'Ritvik Sharma', emp_id: "RA021", warnings: 0);
+    all_employees.add(new_emp);
+    print(all_employees);
     this.employees = List.of(all_employees);
   }
 
@@ -44,20 +51,4 @@ class _FetchEmployeeRecordScreenState extends State<FetchEmployeeRecordScreen> {
           SortablePage(),
         ],
       );
-
-    // @override
-    // Widget build(BuildContext context) => Scaffold(
-    //   backgroundColor: Colors.blue,//Theme.of(context).primaryColor,
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.red,
-    //     centerTitle: true,
-    //     title: Text("Employee Records",
-    //         style: TextStyle(
-    //           fontSize: 28.0,
-    //           fontWeight: FontWeight.bold,
-    //           color: Colors.white, //Color(0xff689d6a),
-    //         )
-    //       ),
-    //   ),
-    // );
 }

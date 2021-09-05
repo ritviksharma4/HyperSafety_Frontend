@@ -1,8 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, prefer_final_fields, non_constant_identifier_names, unnecessary_new
+// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, prefer_final_fields, non_constant_identifier_names, unnecessary_new, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
 
 class ResetRecordsScreen extends StatefulWidget {
@@ -95,16 +96,19 @@ class _ResetRecordsScreenState extends State<ResetRecordsScreen> {
                     color: Colors.red,
                     buttonType: ButtonType.RaisedButton,
                     label: "Submit",
-                    onPressed: () {
-                      setState(() {
-                        FocusScope.of(context).unfocus();
-                        padding_snackbar =
-                            EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 40.0);
-                        if (_empName.text.isNotEmpty &&
+                    onPressed: () async {
+                      if (_empName.text.isNotEmpty &&
                             _empId.text.isNotEmpty) {
-                          showSnackBar(
-                              context, "Record has been reset.", Colors.green);
-                          reset_screen();
+                          var node_response = await reset_records(_empName.text.trimRight().toLowerCase(), _empId.text.trimRight());
+                          if (node_response == "Record Reset Successfully.") {
+                            showSnackBar(
+                                context, node_response, Colors.green);
+                            reset_screen();
+                          }
+                          else {
+                            showSnackBar(
+                                context, node_response, Colors.red);
+                          }
                         } else {
                           if (_empName.text.isEmpty) {
                             showSnackBar(
@@ -114,6 +118,10 @@ class _ResetRecordsScreenState extends State<ResetRecordsScreen> {
                                 Colors.red);
                           }
                         }
+                      setState(() {
+                        FocusScope.of(context).unfocus();
+                        padding_snackbar =
+                            EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 40.0);
                         Future.delayed(const Duration(seconds: 3), () {
                           setState(() {
                             padding_snackbar =

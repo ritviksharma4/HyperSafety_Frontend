@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
-import 'package:hr_tech_solutions/Sample_Employees/Sample_Employees.dart';
+import 'package:hr_tech_solutions/Employees_List/Sample_Employees.dart';
 import 'package:hr_tech_solutions/Widgets/Scrollable_Widget.dart';
 
 class SortablePage extends StatefulWidget {

@@ -17,7 +17,8 @@ upload_image(File imageFile, String empName, String empId) async {
     var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    var uri = Uri.parse("http://192.168.0.221:7091/api/employee_services");
+    var host_ip = "192.168.29.30"; //Ritvik
+    var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
 
     var request = http.MultipartRequest("POST", uri);
     request.fields["empName"] = empName;
@@ -34,13 +35,16 @@ upload_image(File imageFile, String empName, String empId) async {
       return error_message;
     }
     else {
-      var success_message = "Successful";
+      var success_message = "Employee Added Successfully.";
     return success_message;
   }
 }
 
-delete_image(String empName, String empId) async {
-  var uri = Uri.parse("http://192.168.0.221:7091/api/employee_services");
+delete_employee(String empName, String empId) async {
+
+  var host_ip = "192.168.29.30"; //Ritvik
+  var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
+
   var body = jsonEncode({"empName" : empName, "empId" : empId});
   final request = http.Request("DELETE", uri);
   request.headers.addAll(<String, String> {
@@ -55,7 +59,33 @@ delete_image(String empName, String empId) async {
     return error_message;
   }
   else {
-    var success_message = "Successful";
+    var success_message = "Employee Successfully Deleted.";
     return success_message;
   }
+
+}
+
+reset_records(String empName, String empId) async {
+
+  var host_ip = "192.168.29.30"; //Ritvik
+  var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
+
+  var body = jsonEncode({"empName" : empName, "empId" : empId});
+  final request = http.Request("PUT", uri);
+  request.headers.addAll(<String, String> {
+    "Content-Type": "application/json",
+  });
+
+  request.body = body;
+
+  final response = await request.send();
+  if (response.statusCode != 200) {
+    var error_message = response.stream.bytesToString();
+    return error_message;
+  }
+  else {
+    var success_message = "Record Reset Successfully.";
+    return success_message;
+  }
+
 }

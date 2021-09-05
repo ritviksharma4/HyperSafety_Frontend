@@ -19,6 +19,7 @@ upload_image(File imageFile, String empName, String empId) async {
 
     //var host_ip = "192.168.29.30"; //Ritvik
     var host_ip = "192.168.0.221"; //Akul
+    //var host_ip = "192.168.1.41"; //Steve
 
     var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
 

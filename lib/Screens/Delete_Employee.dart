@@ -23,7 +23,7 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.red,
         centerTitle: true,

@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       title: 'HR-Tech-Solutions',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.white, //Color(0xff1d2021), Color of Main Screen.
+        // brightness: Brightness.light,
+        primaryColor: Colors.black, //Color(0xff1d2021), Color of Main Screen.
         accentColor: Color(0xFF282828),
         fontFamily: 'FiraCode',
         textTheme: Theme.of(context).textTheme.apply(

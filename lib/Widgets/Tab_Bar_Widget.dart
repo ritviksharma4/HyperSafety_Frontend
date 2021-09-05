@@ -17,6 +17,7 @@ class TabBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: tabs.length,
+
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.red,
@@ -29,6 +30,9 @@ class TabBarWidget extends StatelessWidget {
             )
           ),
             bottom: TabBar(
+              onTap: (index){
+                print(index.toString());
+              },
               isScrollable: true,
               indicatorColor: Colors.white,
               indicatorWeight: 3,

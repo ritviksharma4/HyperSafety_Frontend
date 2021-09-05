@@ -45,8 +45,9 @@ class _FetchEmployeeRecordScreenState extends State<FetchEmployeeRecordScreen> {
   Widget build(BuildContext context) => TabBarWidget(
         title: "Employee Records",
         tabs: [
-          Tab(icon: Icon(Icons.all_inclusive), text: 'All Employees'),
+          Tab(icon: Icon(Icons.all_inclusive), text: 'All Employees',),
           Tab(icon: Icon(Icons.warning), text: 'Exceeded Warnings'),
+          
         ],
         children: [
           SortablePage(),

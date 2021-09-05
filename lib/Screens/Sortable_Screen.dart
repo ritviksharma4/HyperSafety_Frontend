@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
-import 'package:hr_tech_solutions/Employees_List/Sample_Employees.dart';
 import 'package:hr_tech_solutions/Widgets/Scrollable_Widget.dart';
+
+// import 'package:hr_tech_solutions/Employees_List/Sample_Employees.dart';
+import 'package:hr_tech_solutions/Employees_List/Employees_List.dart';
+
 
 class SortablePage extends StatefulWidget {
   @override

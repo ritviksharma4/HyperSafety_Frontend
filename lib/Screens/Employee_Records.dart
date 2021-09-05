@@ -32,10 +32,12 @@ class _FetchEmployeeRecordScreenState extends State<FetchEmployeeRecordScreen> {
   @override
   void initState() {
     super.initState();
-
-    Employee new_emp = Employee( emp_name: 'Ritvik Sharma', emp_id: "RA021", warnings: 0);
+    setState(() {
+      Employee new_emp = Employee( emp_name: 'Ritvik Sharma', emp_id: "RA021", warnings: 0);
     all_employees.add(new_emp);
-    print(all_employees);
+    print(all_employees[0].emp_name); 
+    });
+    
     this.employees = List.of(all_employees);
   }
 

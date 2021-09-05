@@ -17,7 +17,9 @@ upload_image(File imageFile, String empName, String empId) async {
     var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    var host_ip = "192.168.29.30"; //Ritvik
+    //var host_ip = "192.168.29.30"; //Ritvik
+    var host_ip = "192.168.0.221"; //Akul
+
     var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
 
     var request = http.MultipartRequest("POST", uri);

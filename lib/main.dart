@@ -21,13 +21,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // brightness: Brightness.light,
-        primaryColor: Colors.black, //Color(0xff1d2021), Color of Main Screen.
-        accentColor: Color(0xFF282828),
-        fontFamily: 'FiraCode',
-        textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: Color(0xff32302f),//Colors.white,
-          displayColor: Colors.white, //Color(0xff32302f),
-        ),
+        // primaryColor: Colors.black, //Color(0xff1d2021), Color of Main Screen.
+        // accentColor: Color(0xFF282828),
+        // fontFamily: 'FiraCode',
+        // textTheme: Theme.of(context).textTheme.apply(
+        //   bodyColor: Color(0xff32302f),//Colors.white,
+        //   displayColor: Colors.white, //Color(0xff32302f),
+        // ),
       ),
       home: HomeScreen(),
     );

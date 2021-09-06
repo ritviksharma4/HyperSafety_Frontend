@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
-
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, avoid_print, unused_local_variable, non_constant_identifier_names, unused_import, await_only_futures, library_prefixes, unnecessary_new, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 
 class TabBarWidget extends StatelessWidget {
+  
   final String title;
   final List<Tab> tabs;
   final List<Widget> children;
@@ -30,9 +30,6 @@ class TabBarWidget extends StatelessWidget {
             )
           ),
             bottom: TabBar(
-              onTap: (index){
-                print(index.toString());
-              },
               isScrollable: true,
               indicatorColor: Colors.white,
               indicatorWeight: 3,

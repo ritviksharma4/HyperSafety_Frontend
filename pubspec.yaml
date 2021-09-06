@@ -50,6 +50,7 @@ flutter:
     - assets/Images/Emp_Records.png
     - assets/Images/Reset_Records.png
     - assets/Images/Default_Emp_Image.png
+    - assets/Images/PlaceHolder_Logo.png
 
   fonts:
     - family: OpenSans

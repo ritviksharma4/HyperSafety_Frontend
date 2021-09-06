@@ -51,6 +51,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             children: [
               CircleAvatar(
                 radius: 80.0,
+                backgroundColor: Colors.transparent,
                 backgroundImage: _imageFile == null
                     ? AssetImage("assets/Images/Default_Emp_Image.png")
                     : FileImage(File(_imageFile!.path))

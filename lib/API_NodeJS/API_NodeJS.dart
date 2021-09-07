@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, file_names, import_of_legacy_library_into_null_safe, unused_import, deprecated_member_use, unused_local_variable, non_constant_identifier_names, duplicate_import, prefer_typing_uninitialized_variables, prefer_const_constructors, avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_print, file_names, import_of_legacy_library_into_null_safe, unused_import, deprecated_member_use, unused_local_variable, non_constant_identifier_names, duplicate_import, prefer_typing_uninitialized_variables, prefer_const_constructors, avoid_function_literals_in_foreach_calls, unnecessary_new, empty_catches
 
 import 'dart:convert';
 import 'dart:ffi';
@@ -10,8 +10,50 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+admin_login(String admin_email, String admin_pass) async {
+  var host_ip = "192.168.29.30"; //Ritvik
+  // var host_ip = "192.168.0.221"; //Akul
+  // var host_ip = "192.168.1.41"; //Steve
+
+  var uri = Uri.parse("http://" + host_ip + ":7091/api/admin_services/login");
+  final jwt_storage = new FlutterSecureStorage();
+  String? jwt_token;
+  var body = jsonEncode({"email": admin_email, "password": admin_pass});
+
+  try {
+    // final request = http.Request("POST", uri);
+    // request.headers.addAll(<String, String>{
+    //   "Content-Type": "application/json",
+    // });
+
+    // request.body = body;
+    final response = await http.post(
+      uri,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"email": admin_email, "password": admin_pass}),
+    );
+    // final response = await request.send();
+    if (response.statusCode != 200) {
+      var error_message = response.body;
+      print(error_message);
+      return error_message;
+    } else {
+      var login_response = jsonDecode(response.body);
+      jwt_token = login_response["token"];
+      await jwt_storage.write(key: 'jwt', value: jwt_token);
+      return "Login Successful.";
+    }
+  } catch (e) {
+    return "Server Down - Please Try Again Later.";
+  }
+}
 
 upload_image(File imageFile, String empName, String empId) async {
+  final jwt_storage = new FlutterSecureStorage();
+  final _readJWTToken = await jwt_storage.read(key: "jwt");
+
   var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
   var length = await imageFile.length();
 
@@ -23,6 +65,7 @@ upload_image(File imageFile, String empName, String empId) async {
 
   try {
     var request = http.MultipartRequest("POST", uri);
+    request.headers["x-access-token"] = _readJWTToken;
     request.fields["empName"] = empName;
     request.fields["empId"] = empId;
 
@@ -34,7 +77,10 @@ upload_image(File imageFile, String empName, String empId) async {
 
     var response = await request.send();
     print(response.statusCode);
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401) {
+      return "Go To Login Page.";
+    }
+    else if (response.statusCode != 200) {
       var error_message = response.stream.bytesToString();
       return error_message;
     } else {

@@ -138,7 +138,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
           ),
           color: Color.fromRGBO(255, 255, 255, 0.9),
           child: Text(
-            "SUBMIT",
+            "SEARCH",
             style: TextStyle(
               color: Color(0xFF527DAA),
               letterSpacing: 1.5,

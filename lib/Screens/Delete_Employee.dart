@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
+import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 
 class DeleteEmployeeScreen extends StatefulWidget {
@@ -121,7 +122,12 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
               if (node_response == "Employee Successfully Deleted.") {
                 showSnackBar(context, node_response, Colors.green);
                 reset_screen();
-              } else {
+              } 
+              else if (node_response == "Go To Login Page.") {
+                _navigateToNextScreen(context, LoginScreen());
+                showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
+              } 
+              else {
                 showSnackBar(context, node_response, Colors.red);
               }
             } else {

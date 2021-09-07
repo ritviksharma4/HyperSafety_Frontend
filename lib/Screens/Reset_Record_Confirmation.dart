@@ -57,11 +57,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _empName,
             inputFormatters: [
               WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),
               BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
             ],
-            // keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -99,6 +99,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _empId,
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp('[ ]')),
             ],
@@ -134,10 +135,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         splashColor: Colors.lightGreenAccent,
         elevation: 15.0,
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: ((builder) => bottomSheet()),
-          );
+          
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -173,7 +171,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 File(_imageFile!.path),
                 _empName.text.trimRight().toLowerCase(),
                 _empId.text.trimRight());
-            if (node_response == "Employee Added Successfully.") {
+            if (node_response == "Record Reset Successfully.") {
               showSnackBar(context, node_response, Colors.green);
               reset_screen();
             } else {
@@ -184,19 +182,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               showSnackBar(context, "Name Field is Required.", Colors.red);
             } else if (_empId.text.isEmpty) {
               showSnackBar(context, "Employee ID is Required.", Colors.red);
-            } else if (_isImagePicked == false) {
-              showSnackBar(context, "Employee Image is Required.", Colors.red);
-            }
+            } 
           }
-          setState(() {
-            FocusScope.of(context).unfocus();
-            padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 40.0);
-            Future.delayed(const Duration(seconds: 3), () {
-              setState(() {
-                padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
-              });
-            });
-          });
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -268,7 +255,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
                             child: Text(
-                              'HR Tech Solutions',
+                              'Reset Records',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'OpenSans',
@@ -311,70 +298,6 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     );
   }
 
-  Widget bottomSheet() {
-    return Container(
-      height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 20,
-      ),
-      child: Column(
-        children: <Widget>[
-          Text(
-            "Choose Employee's Photo",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            FlatButton.icon(
-              icon: Icon(
-                Icons.camera,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                takePhoto(ImageSource.camera);
-              },
-              label: Text(
-                "Camera",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            FlatButton.icon(
-              icon: Icon(
-                Icons.image,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                takePhoto(ImageSource.gallery);
-              },
-              label: Text(
-                "Gallery",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ])
-        ],
-      ),
-    );
-  }
-
-  void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.getImage(
-      source: source,
-    );
-    setState(() {
-      _imageFile = pickedFile;
-      _isImagePicked = true;
-      Navigator.pop(context);
-    });
-  }
-
   void showSnackBar(BuildContext context, String text, Color status) {
     final snackBar = SnackBar(
       content: Text(
@@ -391,9 +314,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   }
 
   void reset_screen() {
+    setState(() {
     _empName.clear();
     _empId.clear();
     _imageFile = null;
     _isImagePicked = false;
+    });
   }
 }

@@ -8,13 +8,12 @@ import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
-// flutter run --no-sound-null-safety 
+// flutter run --no-sound-null-safety
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -22,9 +21,10 @@ class MyApp extends StatelessWidget {
       title: 'HR-Tech-Solutions',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: Color(0xFF243b55))
-      ),
+          // dividerColor: Colors.blueGrey,
+          iconTheme: IconThemeData(color: Colors.white),
+          bottomSheetTheme:
+              BottomSheetThemeData(backgroundColor: Color(0xFF243b55))),
       home: LoginScreen(),
     );
   }

@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
-import 'package:hr_tech_solutions/Screens/Sortable_Screen_All_Emp.dart';
-import 'package:hr_tech_solutions/Screens/Sortable_Screen_Warns_Only.dart';
 
 upload_image(File imageFile, String empName, String empId) async {
   var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
@@ -23,24 +21,28 @@ upload_image(File imageFile, String empName, String empId) async {
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
 
-  var request = http.MultipartRequest("POST", uri);
-  request.fields["empName"] = empName;
-  request.fields["empId"] = empId;
+  try {
+    var request = http.MultipartRequest("POST", uri);
+    request.fields["empName"] = empName;
+    request.fields["empId"] = empId;
 
-  var multipartFile = http.MultipartFile(
-      'employee_image', imageFile.openRead(), length,
-      filename: basename(imageFile.path));
+    var multipartFile = http.MultipartFile(
+        'employee_image', imageFile.openRead(), length,
+        filename: basename(imageFile.path));
 
-  request.files.add(multipartFile);
+    request.files.add(multipartFile);
 
-  var response = await request.send();
-  print(response.statusCode);
-  if (response.statusCode != 200) {
-    var error_message = response.stream.bytesToString();
-    return error_message;
-  } else {
-    var success_message = "Employee Added Successfully.";
-    return success_message;
+    var response = await request.send();
+    print(response.statusCode);
+    if (response.statusCode != 200) {
+      var error_message = response.stream.bytesToString();
+      return error_message;
+    } else {
+      var success_message = "Employee Added Successfully.";
+      return success_message;
+    }
+  } catch (e) {
+    return "Server Down - Please Try Again Later.";
   }
 }
 
@@ -50,22 +52,26 @@ delete_employee(String empName, String empId) async {
   // var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
-
   var body = jsonEncode({"empName": empName, "empId": empId});
-  final request = http.Request("DELETE", uri);
-  request.headers.addAll(<String, String>{
-    "Content-Type": "application/json",
-  });
 
-  request.body = body;
+  try {
+    final request = http.Request("DELETE", uri);
+    request.headers.addAll(<String, String>{
+      "Content-Type": "application/json",
+    });
 
-  final response = await request.send();
-  if (response.statusCode != 200) {
-    var error_message = response.stream.bytesToString();
-    return error_message;
-  } else {
-    var success_message = "Employee Successfully Deleted.";
-    return success_message;
+    request.body = body;
+
+    final response = await request.send();
+    if (response.statusCode != 200) {
+      var error_message = response.stream.bytesToString();
+      return error_message;
+    } else {
+      var success_message = "Employee Successfully Deleted.";
+      return success_message;
+    }
+  } catch (e) {
+    return "Server Down - Please Try Again Later.";
   }
 }
 
@@ -75,22 +81,26 @@ reset_records(String empName, String empId) async {
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
-
   var body = jsonEncode({"empName": empName, "empId": empId});
-  final request = http.Request("PUT", uri);
-  request.headers.addAll(<String, String>{
-    "Content-Type": "application/json",
-  });
 
-  request.body = body;
+  try {
+    final request = http.Request("PUT", uri);
+    request.headers.addAll(<String, String>{
+      "Content-Type": "application/json",
+    });
 
-  final response = await request.send();
-  if (response.statusCode != 200) {
-    var error_message = response.stream.bytesToString();
-    return error_message;
-  } else {
-    var success_message = "Record Reset Successfully.";
-    return success_message;
+    request.body = body;
+
+    final response = await request.send();
+    if (response.statusCode != 200) {
+      var error_message = response.stream.bytesToString();
+      return error_message;
+    } else {
+      var success_message = "Record Reset Successfully.";
+      return success_message;
+    }
+  } catch (e) {
+    return "Server Down - Please Try Again Later.";
   }
 }
 
@@ -106,23 +116,26 @@ display_records(bool showAll) async {
   }
 
   // final request = http.Request("GET", uri);
-  final response = await http.get(uri);
-
-  if (response.body != "Error - Try Again." && response.statusCode == 200) {
-    List employee_details = jsonDecode(response.body);
-    List<Employee> list_emp = [];
-    employee_details.forEach((employee) {
-      Employee node_resp_emp = Employee(
-          emp_name: CapitalizeText(employee["EmployeeName"]),
-          emp_id: employee["EmployeeID"],
-          warnings: employee["Warnings"]);
-      list_emp.add(node_resp_emp);
-    });
-    return list_emp;
-  } else {
-    var error_message = response.body;
-    // print(error_message);
-    return (error_message);
+  try {
+    final response = await http.get(uri);
+    if (response.body != "Error - Try Again." && response.statusCode == 200) {
+      List employee_details = jsonDecode(response.body);
+      List<Employee> list_emp = [];
+      employee_details.forEach((employee) {
+        Employee node_resp_emp = Employee(
+            emp_name: CapitalizeText(employee["EmployeeName"]),
+            emp_id: employee["EmployeeID"],
+            warnings: employee["Warnings"]);
+        list_emp.add(node_resp_emp);
+      });
+      return list_emp;
+    } else {
+      var error_message = response.body;
+      // print(error_message);
+      return (error_message);
+    }
+  } catch (e) {
+    return "Server Down - Please Try Again Later.";
   }
 }
 

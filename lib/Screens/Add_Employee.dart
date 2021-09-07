@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label
+// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label, sized_box_for_whitespace
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
@@ -10,15 +10,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
+import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
-
   @override
   _AddEmployeeScreenState createState() => _AddEmployeeScreenState();
 }
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
-
   RegExp reg_exp = RegExp(r"(\w+)");
 
   PickedFile? _imageFile;
@@ -30,170 +29,277 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
   EdgeInsets padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
 
+  Widget _addImgCircleAvatar() {
+    return CircleAvatar(
+      radius: 80,
+      backgroundColor: Colors.white,
+      child: CircleAvatar(
+        radius: 78,
+        backgroundColor: Color(0xFF004e92),
+        backgroundImage: _imageFile == null
+            ? AssetImage("assets/Images/Default_Emp_Image.png")
+            : FileImage(File(_imageFile!.path)) as ImageProvider,
+      ),
+    );
+  }
+
+  Widget _addEmployeeNameField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'NAME',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: _empName,
+            inputFormatters: [
+              WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),
+              BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
+            ],
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.amber, width: 3.0),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              hintText: 'Enter Employee Name.',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _addEmployeeIDField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'EMPLOYEE ID',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: _empId,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp('[ ]')),
+            ],
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.amber, width: 3.0),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                Icons.apps_rounded,
+                color: Colors.white,
+              ),
+              hintText: 'Enter Employee ID.',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _addUploadImageBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 50.0),
+      width: double.infinity,
+      child: RaisedButton(
+        splashColor: Colors.lightGreenAccent,
+        elevation: 15.0,
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: ((builder) => bottomSheet()),
+          );
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Color.fromRGBO(255, 255, 255, 0.9),
+        child: Text(
+          'UPLOAD IMAGE',
+          style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _addSubmitBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20.0),
+      width: double.infinity,
+      child: RaisedButton(
+        splashColor: Colors.lightGreenAccent,
+        elevation: 15.0,
+        onPressed: () async {
+          if (_empName.text.isNotEmpty &&
+              _empId.text.isNotEmpty &&
+              _isImagePicked) {
+            var node_response = await upload_image(
+                File(_imageFile!.path),
+                _empName.text.trimRight().toLowerCase(),
+                _empId.text.trimRight());
+            if (node_response == "Employee Added Successfully.") {
+              showSnackBar(context, node_response, Colors.green);
+              reset_screen();
+            } else {
+              showSnackBar(context, node_response, Colors.red);
+            }
+          } else {
+            if (_empName.text.isEmpty) {
+              showSnackBar(context, "Name Field is Required.", Colors.red);
+            } else if (_empId.text.isEmpty) {
+              showSnackBar(context, "Employee ID is Required.", Colors.red);
+            } else if (_isImagePicked == false) {
+              showSnackBar(context, "Employee Image is Required.", Colors.red);
+            }
+          }
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Color.fromRGBO(255, 255, 255, 0.9),
+        child: Text(
+          "SUBMIT",
+          style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        centerTitle: true,
-        title: Text("Add New Employee",
-            style: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white, //Color(0xff689d6a), Title Color.
-            )),
-      ), //
-      body: Padding(
-          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 80.0,
-                backgroundColor: Colors.transparent,
-                backgroundImage: _imageFile == null
-                    ? AssetImage("assets/Images/Default_Emp_Image.png")
-                    : FileImage(File(_imageFile!.path))
-                        as ImageProvider, //AssetImage("assets/Images/Add_Employee.png"),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-              ),
-              TextFormField(
-                controller: _empName,
-                style: TextStyle(
-                  fontSize: 20.0,
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF004e92),
+                      Color(0xFF00095b),
+                      Color(0xFF000742),
+                    ],
+                  ),
                 ),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 15.0),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.teal)),
-                  hintText: "New Employee Name",
-                  hintStyle: TextStyle(color: Colors.blueGrey),
-                  labelText: "Name",
-                  labelStyle: TextStyle(fontSize: 24, color: Colors.black),
-                  fillColor: Colors.grey[400],
-                  filled: true,
-                ),
-                inputFormatters: [
-                  WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),                 
-                  BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
-                ],
-
-              ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      0.0, 20.0, 0.0, 0.0)), // Padding between 2 text fields
-              TextFormField(
-                controller: _empId,
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 15.0),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.teal)),
-                  hintText: "New Employee ID",
-                  hintStyle: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
-                  labelText: "Employee ID",
-                  labelStyle: TextStyle(fontSize: 24, color: Colors.black),
-                  fillColor: Colors.grey[400],
-                  filled: true,
-                ),
-                  inputFormatters: [              
-                  FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                ],
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-                child: SizedBox(
-                  width: 220.0,
-                  height: 50.0,
-                  child: RaisedButton(
-                    elevation: 20.0,
-                    color: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Upload Image",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 23.0,
-                        ),
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              color: Colors.white,
+                              icon: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: 25.5,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
+                            child: Text(
+                              'Add New Employee',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    textColor: Colors.white,
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: ((builder) => bottomSheet()),
-                      );
-                    },
+                      Container(
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 40.0,
+                            vertical: 20.0,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              _addImgCircleAvatar(),
+                              _addEmployeeNameField(),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 10.0)),
+                              _addEmployeeIDField(),
+                              _addUploadImageBtn(),
+                              _addSubmitBtn(),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ),
-              Spacer(),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 225),
-                padding: padding_snackbar,
-                child: SizedBox(
-                  width: 220.0,
-                  height: 50.0,
-                  child: TimerButton(
-                    label: "Submit",
-                    color: Colors.red,
-                    buttonType: ButtonType.RaisedButton,
-                    onPressed: () async {
-                      if (_empName.text.isNotEmpty &&
-                            _empId.text.isNotEmpty &&
-                            _isImagePicked) {
-                            var node_response = await upload_image(File(_imageFile!.path), _empName.text.trimRight().toLowerCase(), _empId.text.trimRight());
-                            if (node_response == "Employee Added Successfully.") {
-                              showSnackBar(context, node_response, Colors.green);
-                              reset_screen();
-                            }
-                            else {
-                                showSnackBar(context,
-                                  node_response, Colors.red);
-                            }
-                        } 
-                        else {
-                          if (_empName.text.isEmpty) {
-                            showSnackBar(context, "Name Field is Required.", Colors.red);
-                          } 
-                          else if (_empId.text.isEmpty) {
-                            showSnackBar(context, "Employee ID is Required.", Colors.red);
-                          } 
-                          else if (_isImagePicked == false) {
-                            showSnackBar(
-                                context, "Employee Image is Required.", Colors.red);
-                          }
-                        }
-                      setState(() {
-                        FocusScope.of(context).unfocus();
-                        padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 40.0);
-                        Future.delayed(const Duration(seconds: 3), () {
-                          setState(() {
-                            padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
-                          });
-                        });
-                      });
-                    },
-                    timeOutInSeconds: 3,
-                    disabledTextStyle: new TextStyle(fontSize: 23.0, color: Colors.white),
-                    activeTextStyle: new TextStyle(fontSize: 23.0, color: Colors.white),
-                  ),
-                ),
-              ),
+              )
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 
@@ -202,8 +308,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       height: 100.0,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(
-        horizontal: 20,
         vertical: 20,
+        horizontal: 20,
       ),
       child: Column(
         children: <Widget>[
@@ -219,18 +325,30 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             FlatButton.icon(
-              icon: Icon(Icons.camera),
+              icon: Icon(
+                Icons.camera,
+                color: Colors.white,
+              ),
               onPressed: () {
                 takePhoto(ImageSource.camera);
               },
-              label: Text("Camera"),
+              label: Text(
+                "Camera",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             FlatButton.icon(
-              icon: Icon(Icons.image),
+              icon: Icon(
+                Icons.image,
+                color: Colors.white,
+              ),
               onPressed: () {
                 takePhoto(ImageSource.gallery);
               },
-              label: Text("Gallery"),
+              label: Text(
+                "Gallery",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ])
         ],
@@ -251,21 +369,25 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
   void showSnackBar(BuildContext context, String text, Color status) {
     final snackBar = SnackBar(
-      content: Text(text, textScaleFactor: 1.3,),
+      content: Text(
+        text,
+        textScaleFactor: 1.3,
+      ),
       backgroundColor: status,
       duration: Duration(seconds: 2, milliseconds: 560), //default is 4s
     );
-    ScaffoldMessenger.of(context)
-    .showSnackBar(snackBar)
-    .closed.then((reason) => 
-    padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then(
+          (reason) =>
+              padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+        );
   }
 
-  void reset_screen(){
+  void reset_screen() {
+    setState(() {
     _empName.clear();
     _empId.clear();
     _imageFile = null;
     _isImagePicked = false;
+    });
   }
 }

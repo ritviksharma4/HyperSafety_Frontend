@@ -5,13 +5,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:hr_tech_solutions/Screens/Add_Employee.dart';
-import 'package:hr_tech_solutions/Screens/Add_Employee_Test.dart';
-
+import 'package:hr_tech_solutions/Screens/Add_Employee.dart';
 import 'package:hr_tech_solutions/Screens/Delete_Employee.dart';
 import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   Widget _buildAddEmployeeBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -27,7 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: RaisedButton(
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
-        onPressed: () {_navigateToNextScreen(context, AddEmployeeScreen());},
+        onPressed: () {
+          _navigateToNextScreen(context, AddEmployeeScreen());
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -54,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: RaisedButton(
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
-        onPressed: () {_navigateToNextScreen(context, DeleteEmployeeScreen());},
+        onPressed: () {
+          _navigateToNextScreen(context, DeleteEmployeeScreen());
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -81,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: RaisedButton(
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
-        onPressed: () {_navigateToNextScreen(context, FetchEmployeeRecordScreen());},
+        onPressed: () {
+          _navigateToNextScreen(context, FetchEmployeeRecordsScreen());
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -108,7 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: RaisedButton(
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
-        onPressed: (){_navigateToNextScreen(context, ResetRecordsScreen());},
+        onPressed: () {
+          _navigateToNextScreen(context, ResetRecordScreen());
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -156,56 +160,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 35.0,
-                    horizontal: 0.0
-                  ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
                         children: [
                           Align(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            color: Colors.white,
-                            icon: Icon(Icons.arrow_back_ios_new_rounded  , size: 25.5,), 
-                            onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              color: Colors.white,
+                              icon: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: 25.5,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
+                            child: Text(
+                              'HR Tech Solutions',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
-                        child: Text(
-                          'HR Tech Solutions',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
+                      Container(
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 40.0,
+                            vertical: 120.0,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              _buildAddEmployeeBtn(),
+                              _buildDispEmployeebtn(),
+                              _buildResetRecordbtn(),
+                              _buildDelEmployeebtn(),
+                            ],
                           ),
                         ),
-                      ),
-                      ],
-                    ),
-              Container(
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      _buildAddEmployeeBtn(),
-                      _buildDispEmployeebtn(),
-                      _buildResetRecordbtn(),
-                      _buildDelEmployeebtn(),
-                    ],
-                  ),
-                ),
-              )
+                      )
                     ],
                   ),
                 ),
@@ -216,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   void _navigateToNextScreen(BuildContext context, NewScreen) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => NewScreen));

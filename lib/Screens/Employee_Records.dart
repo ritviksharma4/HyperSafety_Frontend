@@ -1,63 +1,268 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, non_constant_identifier_names, unnecessary_this, unnecessary_string_interpolations, avoid_print, unused_local_variable, unused_element, deprecated_member_use
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, unused_import, avoid_unnecessary_containers, unnecessary_this, unnecessary_string_interpolations, duplicate_import
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/services.dart';
+import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
+import 'package:hr_tech_solutions/Screens/Add_Employee.dart';
+import 'package:hr_tech_solutions/Screens/Delete_Employee.dart';
+import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
+import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
+import 'package:hr_tech_solutions/Employees_List/Employees_List.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
 import 'package:hr_tech_solutions/Widgets/Scrollable_Widget.dart';
-import 'package:hr_tech_solutions/Widgets/Tab_Bar_Widget.dart';
-import 'package:hr_tech_solutions/Screens/Sortable_Screen_All_Emp.dart';
-import 'package:hr_tech_solutions/Screens/Sortable_Screen_Warns_Only.dart';
-
-
-// import 'package:hr_tech_solutions/Employees_List/Sample_Employees.dart';
 import 'package:hr_tech_solutions/Employees_List/Employees_List.dart';
+import 'package:hr_tech_solutions/Employees_List/Exceeded_Warnings_List.dart';
 
-
-class FetchEmployeeRecordScreen extends StatefulWidget {
+class FetchEmployeeRecordsScreen extends StatefulWidget {
   @override
-  _FetchEmployeeRecordScreenState createState() =>
-      _FetchEmployeeRecordScreenState();
+  _FetchEmployeeRecordsScreenState createState() =>
+      _FetchEmployeeRecordsScreenState();
 }
 
-class _FetchEmployeeRecordScreenState extends State<FetchEmployeeRecordScreen> {
-  
-  int ? drop_down_value = 1;
-
-  late List<Employee> employees;
+class _FetchEmployeeRecordsScreenState
+    extends State<FetchEmployeeRecordsScreen> {
+  List<Employee> employees = [];
   int? sortColumnIndex;
   bool isAscending = false;
-
-  TextEditingController warnings_alert = TextEditingController();
-  String? codeDialogue;
-  String? valueText;
-
-  // List all_employees = <Employee> [];
+  final List<String> categories = ["All Employees", "Exceeded Warnings"];
+  int selectedIndex = 0;
+  bool showAll = true;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      // Employee new_emp = Employee( emp_name: 'Ritvik Sharma', emp_id: "RA021", warnings: 0);
-      // all_employees.add(new_emp);
-      // print(all_employees[0].emp_name); 
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _acceptNodeResponse(showAll);
     });
-    
-    this.employees = List.of(all_employees);
+  }
+
+  _acceptNodeResponse(bool showAll) async {
+    var node_response = await display_records(showAll);
+
+    if (node_response is String) {
+      showSnackBar(context, node_response, Colors.red);
+    } else {
+      setState(() {
+        this.employees = List.of(node_response);
+      });
+    }
+  }
+
+  Widget _addCategoryTab() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Container(
+        height: 90.0,
+        child: ListView.builder(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedIndex = index;
+                    if (selectedIndex == 0) {
+                      showAll = true;
+                    } else {
+                      showAll = false;
+                    }
+                  });
+                  _acceptNodeResponse(showAll);
+                },
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
+                  child: Text(
+                    categories[index],
+                    style: TextStyle(
+                      color: index == selectedIndex
+                          ? Colors.white
+                          : Colors.white60,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ),
+                ),
+              );
+            }),
+      ),
+    );
+  }
+
+  Widget _addScrollableWidget() {
+    return Container(
+      // color: Colors.white,
+      child: ScrollableWidget(child: buildDataTable()),
+    );
+  }
+
+  Widget buildDataTable() {
+    final columns = ['Emp Name', 'Emp ID', 'Warnings'];
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: DataTable(
+        sortAscending: isAscending,
+        sortColumnIndex: sortColumnIndex,
+        columns: getColumns(columns),
+        rows: getRows(employees),
+      ),
+    );
+  }
+
+  List<DataColumn> getColumns(List<String> columns) => columns
+      .map((String column) => DataColumn(
+            label: Text(
+              column,
+              style: TextStyle(color: Colors.white),
+            ),
+            onSort: onSort,
+          ))
+      .toList();
+
+  List<DataRow> getRows(List<Employee> employees) =>
+      employees.map((Employee employee) {
+        final cells = [employee.emp_name, employee.emp_id, employee.warnings];
+        return DataRow(cells: getCells(cells));
+      }).toList();
+
+  List<DataCell> getCells(List<dynamic> cells) => cells
+      .map((emp_data) => DataCell(
+            Text(
+              '$emp_data',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ))
+      .toList();
+
+  void onSort(int columnIndex, bool ascending) {
+    if (columnIndex == 0) {
+      employees.sort((employee1, employee2) => compareString(
+          ascending, '${employee1.emp_name}', '${employee2.emp_name}'));
+    } else if (columnIndex == 1) {
+      employees.sort((employee1, employee2) => compareString(
+          ascending, '${employee1.emp_id}', '${employee2.emp_id}'));
+    }
+    if (columnIndex == 2) {
+      employees.sort((employee1, employee2) => compareString(
+          ascending, '${employee1.warnings}', '${employee2.warnings}'));
+    }
+    setState(() {
+      this.sortColumnIndex = columnIndex;
+      this.isAscending = ascending;
+    });
+  }
+
+  int compareString(bool ascending, String value1, String value2) =>
+      ascending ? value1.compareTo(value2) : value2.compareTo(value1);
+
+  void showSnackBar(BuildContext context, String text, Color status) {
+    final snackBar = SnackBar(
+      content: Text(
+        text,
+        textScaleFactor: 1.3,
+      ),
+      backgroundColor: status,
+      duration: Duration(seconds: 2, milliseconds: 560), //default is 4s
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
-  Widget build(BuildContext context) => TabBarWidget(
-        title: "Employee Records",
-        tabs: [
-          Tab(icon: Icon(Icons.all_inclusive), text: 'All Employees',),
-          Tab(icon: Icon(Icons.warning), text: 'Exceeded Warnings'),
-          
-        ],
-        children: [
-          SortablePageAll(),
-          SortablePageWarnsOnly(),
-        ],
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF004e92),
+                      Color(0xFF00095b),
+                      Color(0xFF000742),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              color: Colors.white,
+                              icon: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: 25.5,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
+                            child: Text(
+                              'Employee Records',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20.0,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              _addCategoryTab(),
+                              _addScrollableWidget()
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _navigateToNextScreen(BuildContext context, NewScreen) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => NewScreen));
+  }
 }

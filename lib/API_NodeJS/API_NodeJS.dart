@@ -13,8 +13,8 @@ import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 admin_login(String admin_email, String admin_pass) async {
-  var host_ip = "192.168.29.30"; //Ritvik
-  // var host_ip = "192.168.0.221"; //Akul
+  //var host_ip = "192.168.29.30"; //Ritvik
+  var host_ip = "192.168.0.190"; //Akul
   // var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/admin_services/login");
@@ -57,8 +57,8 @@ upload_image(File imageFile, String empName, String empId) async {
   var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
   var length = await imageFile.length();
 
-  var host_ip = "192.168.29.30"; //Ritvik
-  // var host_ip = "192.168.0.221"; //Akul
+  //var host_ip = "192.168.29.30"; //Ritvik
+  var host_ip = "192.168.0.190"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -79,8 +79,7 @@ upload_image(File imageFile, String empName, String empId) async {
     print(response.statusCode);
     if (response.statusCode == 401) {
       return "Go To Login Page.";
-    }
-    else if (response.statusCode != 200) {
+    } else if (response.statusCode != 200) {
       var error_message = response.stream.bytesToString();
       return error_message;
     } else {
@@ -93,8 +92,10 @@ upload_image(File imageFile, String empName, String empId) async {
 }
 
 delete_employee(String empName, String empId) async {
-  var host_ip = "192.168.29.30"; //Ritvik
-  // var host_ip = "192.168.0.221"; //Akul
+  final jwt_storage = new FlutterSecureStorage();
+  final _readJWTToken = await jwt_storage.read(key: "jwt");
+  //var host_ip = "192.168.29.30"; //Ritvik
+  var host_ip = "192.168.0.190"; //Akul
   // var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -102,17 +103,23 @@ delete_employee(String empName, String empId) async {
 
   try {
     final request = http.Request("DELETE", uri);
-    request.headers.addAll(<String, String>{
-      "Content-Type": "application/json",
-    });
+    request.headers["Content-Type"] = "application/json";
+    request.headers["x-access-token"] = _readJWTToken;
+    // request.headers.addAll(<String, String>{
+    //   "Content-Type": "application/json",
+    // });
 
     request.body = body;
 
     final response = await request.send();
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401) {
+      return "Go To Login Page.";
+    } 
+    else if (response.statusCode != 200) {
       var error_message = response.stream.bytesToString();
       return error_message;
-    } else {
+    } 
+    else {
       var success_message = "Employee Successfully Deleted.";
       return success_message;
     }
@@ -122,8 +129,10 @@ delete_employee(String empName, String empId) async {
 }
 
 reset_records(String empName, String empId) async {
-  var host_ip = "192.168.29.30"; //Ritvik
-  // var host_ip = "192.168.0.221"; //Akul
+  final jwt_storage = new FlutterSecureStorage();
+  final _readJWTToken = await jwt_storage.read(key: "jwt");
+  // var host_ip = "192.168.29.30"; //Ritvik
+  var host_ip = "192.168.0.190"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -131,14 +140,15 @@ reset_records(String empName, String empId) async {
 
   try {
     final request = http.Request("PUT", uri);
-    request.headers.addAll(<String, String>{
-      "Content-Type": "application/json",
-    });
+    request.headers["Content-Type"] = "application/json";
+    request.headers["x-access-token"] = _readJWTToken;
 
     request.body = body;
 
     final response = await request.send();
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401) {
+      return "Go To Login Page.";
+    } else if (response.statusCode != 200) {
       var error_message = response.stream.bytesToString();
       return error_message;
     } else {
@@ -151,8 +161,10 @@ reset_records(String empName, String empId) async {
 }
 
 display_records(bool showAll) async {
-  var host_ip = "192.168.29.30"; //Ritvik
-  // var host_ip = "192.168.0.221"; //Akul
+  final jwt_storage = new FlutterSecureStorage();
+  final _readJWTToken = await jwt_storage.read(key: "jwt");
+  //var host_ip = "192.168.29.30"; //Ritvik
+  var host_ip = "192.168.0.190"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -161,11 +173,14 @@ display_records(bool showAll) async {
     uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services/3");
   }
 
-  // final request = http.Request("GET", uri);
   try {
-    final response = await http.get(uri);
-    if (response.body != "Error - Try Again." && response.statusCode == 200) {
-      List employee_details = jsonDecode(response.body);
+    var request = http.Request("GET", uri);
+    request.headers["x-access-token"] = _readJWTToken;
+    final response = await request.send();
+    var response_body = await response.stream.bytesToString();
+
+    if (response_body != "Error - Try Again." && response.statusCode == 200) {
+      List employee_details = jsonDecode(response_body);
       List<Employee> list_emp = [];
       employee_details.forEach((employee) {
         Employee node_resp_emp = Employee(
@@ -175,8 +190,10 @@ display_records(bool showAll) async {
         list_emp.add(node_resp_emp);
       });
       return list_emp;
+    } else if (response.statusCode == 401) {
+      return "Go To Login Page.";
     } else {
-      var error_message = response.body;
+      var error_message = response_body;
       // print(error_message);
       return (error_message);
     }

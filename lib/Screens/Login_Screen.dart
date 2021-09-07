@@ -15,6 +15,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
+  bool _obscureText = true;
+
   TextEditingController admin_email = TextEditingController();
   TextEditingController admin_pass = TextEditingController();
   Widget _buildEmailTF() {
@@ -73,13 +76,25 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            obscureText: _obscureText,
+
             controller: admin_pass,
-            obscureText: true,
+            // obscureText: true,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: Colors.white,
+                  )),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.amber, width: 3.0),
                 borderRadius: BorderRadius.circular(10.0),
@@ -110,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
               await admin_login(admin_email.text, admin_pass.text);
           if (login_response == "Login Successful.") {
             _navigateToNextScreen(context, HomeScreen());
-            reset_fields();
+            // reset_fields();
           } else {
             showSnackBar(context, login_response, Colors.red);
           }
@@ -222,13 +237,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void reset_fields() {
     setState(() {
-    admin_email.clear();
-    admin_pass.clear();
+      admin_email.clear();
+      admin_pass.clear();
     });
   }
 
   void _navigateToNextScreen(BuildContext context, NewScreen) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => NewScreen));
+  }
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 }

@@ -5,10 +5,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Screens/Add_Employee.dart';
 import 'package:hr_tech_solutions/Screens/Delete_Employee.dart';
 import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,11 +18,49 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // final jwt_storage = new FlutterSecureStorage();
+  // void checkPreviousSessionAndRedirect() async {
+  //   final _readJWTToken = await jwt_storage.read(key: "jwt");
+  //   if (_readJWTToken != null) {
+  //     Navigator.pushNamedAndRemoveUntil(
+  //         context, HomeScreen().toString(), (Route<dynamic> route) => true);
+  //   }
+  // }
+
+  // void initState() {
+  //   super.initState();
+  //   checkPreviousSessionAndRedirect();
+  // }
+
   Widget _buildAddEmployeeBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
+        child: Container(
+          child: Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: new Image.asset("assets/Images/Add_Employee.png",
+                    width: 40.0, height: 40.0),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  'ADD EMPLOYEE',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.25,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
         onPressed: () {
@@ -31,16 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: Colors.white,
-        child: Text(
-          'ADD EMPLOYEE',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
       ),
     );
   }
@@ -50,6 +80,30 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
+        child: Container(
+          child: Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: new Image.asset("assets/Images/Del_Employee.png",
+                    width: 40.0, height: 40.0),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  'DELETE EMPLOYEE',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.25,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
         onPressed: () {
@@ -60,16 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: Colors.white,
-        child: Text(
-          'DELETE EMPLOYEE',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
       ),
     );
   }
@@ -79,6 +123,30 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
+        child: Container(
+          child: Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: new Image.asset("assets/Images/Emp_Records.png",
+                    width: 40.0, height: 40.0),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  'DISPLAY EMPLOYEES',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.25,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
         onPressed: () {
@@ -89,16 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: Colors.white,
-        child: Text(
-          'DISPLAY EMPLOYEES',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
       ),
     );
   }
@@ -108,6 +166,30 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
+        child: Container(
+          child: Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: new Image.asset("assets/Images/Reset_Records.png",
+                    width: 40.0, height: 35.0),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  'RESET RECORDS',
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.25,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         splashColor: Colors.lightGreenAccent,
         elevation: 5.0,
         onPressed: () {
@@ -118,16 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: Colors.white,
-        child: Text(
-          'RESET RECORD',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
       ),
     );
   }

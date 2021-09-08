@@ -13,8 +13,8 @@ import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 admin_login(String admin_email, String admin_pass) async {
-  // var host_ip = "192.168.29.30"; //Ritvik
-  var host_ip = "192.168.0.221"; //Akul
+  var host_ip = "192.168.29.30"; //Ritvik
+  // var host_ip = "192.168.0.221"; //Akul
   // var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/admin_services/login");
@@ -57,8 +57,8 @@ upload_image(File imageFile, String empName, String empId) async {
   var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
   var length = await imageFile.length();
 
-  // var host_ip = "192.168.29.30"; //Ritvik
-   var host_ip = "192.168.0.221"; //Akul
+  var host_ip = "192.168.29.30"; //Ritvik
+  //  var host_ip = "192.168.0.221"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -94,8 +94,8 @@ upload_image(File imageFile, String empName, String empId) async {
 delete_employee(String empName, String empId) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
-  // var host_ip = "192.168.29.30"; //Ritvik
-  var host_ip = "192.168.0.221"; //Akul
+  var host_ip = "192.168.29.30"; //Ritvik
+  // var host_ip = "192.168.0.221"; //Akul
   // var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -114,12 +114,10 @@ delete_employee(String empName, String empId) async {
     final response = await request.send();
     if (response.statusCode == 401) {
       return "Go To Login Page.";
-    } 
-    else if (response.statusCode != 200) {
+    } else if (response.statusCode != 200) {
       var error_message = response.stream.bytesToString();
       return error_message;
-    } 
-    else {
+    } else {
       var success_message = "Employee Successfully Deleted.";
       return success_message;
     }
@@ -131,8 +129,8 @@ delete_employee(String empName, String empId) async {
 reset_records(String empName, String empId) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
-  // var host_ip = "192.168.29.30"; //Ritvik
-  var host_ip = "192.168.0.221"; //Akul
+  var host_ip = "192.168.29.30"; //Ritvik
+  // var host_ip = "192.168.0.221"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -163,8 +161,8 @@ reset_records(String empName, String empId) async {
 display_records(bool showAll) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
-  // var host_ip = "192.168.29.30"; //Ritvik
-  var host_ip = "192.168.0.221"; //Akul
+  var host_ip = "192.168.29.30"; //Ritvik
+  // var host_ip = "192.168.0.221"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
@@ -190,6 +188,38 @@ display_records(bool showAll) async {
         list_emp.add(node_resp_emp);
       });
       return list_emp;
+    } else if (response.statusCode == 401) {
+      return "Go To Login Page.";
+    } else {
+      var error_message = response_body;
+      // print(error_message);
+      return (error_message);
+    }
+  } catch (e) {
+    return "Server Down - Please Try Again Later.";
+  }
+}
+
+fetch_specific_employee_records(String empName, String empId) async {
+  var host_ip = "192.168.29.30"; //Ritvik
+  // var host_ip = "192.168.0.221"; //Akul
+  //var host_ip = "192.168.1.41"; //Steve
+  var uri = Uri.parse("http://" +
+      host_ip +
+      ":7091/api/employee_services/" +
+      empId +
+      "/" +
+      empName);
+  int empWarnings;
+  try {
+    var request = http.Request("GET", uri);
+    final response = await request.send();
+    var response_body = await response.stream.bytesToString();
+
+    if (response_body != "Error - Try Again." && response.statusCode == 200) {
+      List employee_details = jsonDecode(response_body);
+      print(employee_details[0]["Warnings"]);
+      return employee_details[0]["Warnings"];
     } else if (response.statusCode == 401) {
       return "Go To Login Page.";
     } else {

@@ -1,7 +1,7 @@
 // ignore: file_names
 // ignore: file_names
 // ignore: file_names
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,16 +11,19 @@ import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
 class ResetRecordScreen extends StatefulWidget {
+  static String variable = "";
+  static String specific_empName = "";
+  static String specific_empId = "";
+  static String specific_empWarnings = "";
   @override
   _ResetRecordScreenState createState() => _ResetRecordScreenState();
 }
 
 class _ResetRecordScreenState extends State<ResetRecordScreen> {
   RegExp reg_exp = RegExp(r"(\w+)");
-
   TextEditingController _empName = TextEditingController();
   TextEditingController _empId = TextEditingController();
-  // TextEditingController _empWarnings = TextEditingController();
+  TextEditingController _empWarnings = TextEditingController();
 
 
   Widget _ResetConfirmationNameField() {
@@ -117,36 +120,42 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
         child: RaisedButton(
           splashColor: Colors.lightGreenAccent,
           elevation: 15.0,
-          // onPressed: () async {
-          //   if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
-          //     var node_response = await reset_records(
-          //         _empName.text.trimRight().toLowerCase(),
-          //         _empId.text.trimRight());
-          //     if (node_response == "Record Reset Successfully.") {
-          //       setState(() {
-                  
-          //       });
-          //       showSnackBar(context, node_response, Colors.green);
-          //       reset_screen();
-          //     } 
-          //     else if (node_response == "Go To Login Page.") {
-          //       _navigateToNextScreen(context, LoginScreen());
-          //       showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
-          //     } else {
-          //       showSnackBar(context, node_response, Colors.red);
-          //     }
-          //   } else {
-          //     if (_empName.text.isEmpty) {
-          //       showSnackBar(context, "Name Field is Required.", Colors.red);
-          //     } else if (_empId.text.isEmpty) {
-          //       showSnackBar(context, "Employee ID is Required.", Colors.red);
-          //     }
-          //   }
-          //   _navigateToNextScreen(context, ResetConfirmationScreen());
-          // },
-          onPressed: (){
-             _navigateToNextScreen(context, ResetConfirmationScreen());
+          onPressed: () async {
+            if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
+              var node_response = await fetch_specific_employee_records(
+                  _empName.text.trimRight().toLowerCase(),
+                  _empId.text.trimRight());
+              if (node_response is int) {
+                int specific_empWarnings = node_response;
+                print("Specific Warnings: ");
+                print(specific_empWarnings);
+                setState(() {
+                  ResetRecordScreen.specific_empName = _empName.text;
+                  ResetRecordScreen.specific_empId = _empId.text;
+                  ResetRecordScreen.specific_empWarnings = specific_empWarnings.toString();
+                  // ResetRecordScreen.variable = _empName.text;
+                });
+                _navigateToNextScreen(context, ResetConfirmationScreen());
+                // showSnackBar(context, node_response, Colors.green);
+                // reset_screen();
+              } 
+              else if (node_response == "Go To Login Page.") {
+                _navigateToNextScreen(context, LoginScreen());
+                showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
+              } else {
+                showSnackBar(context, node_response, Colors.red);
+              }
+            } else {
+              if (_empName.text.isEmpty) {
+                showSnackBar(context, "Name Field is Required.", Colors.red);
+              } else if (_empId.text.isEmpty) {
+                showSnackBar(context, "Employee ID is Required.", Colors.red);
+              }
+            }
           },
+          // onPressed: (){
+          //    _navigateToNextScreen(context, ResetConfirmationScreen());
+          // },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),

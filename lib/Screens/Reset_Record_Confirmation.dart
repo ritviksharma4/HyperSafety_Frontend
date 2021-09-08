@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label, sized_box_for_whitespace
+// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label, sized_box_for_whitespace, library_prefixes
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
@@ -11,7 +11,7 @@ import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
+import 'package:hr_tech_solutions/Screens/Reset_Record.dart' as ResetRecords;
 
 class ResetConfirmationScreen extends StatefulWidget {
   @override
@@ -30,6 +30,17 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
   TextEditingController _empWarnings = TextEditingController();
 
   EdgeInsets padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
+
+  @override
+  void initState(){
+    super.initState();
+    setState(() {
+      _empName.text = ResetRecords.ResetRecordScreen.specific_empName;
+      _empId.text = ResetRecords.ResetRecordScreen.specific_empId;
+      _empWarnings.text = ResetRecords.ResetRecordScreen.specific_empWarnings;
+      _imageFile = null;
+    });
+  }
 
   Widget _addImgCircleAvatar() {
     return CircleAvatar(
@@ -412,11 +423,6 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
   }
 
   void display_details() {
-    setState(() {
-      _empName.text = "Akul Jain";
-      _empId.text = "RA007";
-      _empWarnings.text = "333";
-      _imageFile = null;
-    });
+    
   }
 }

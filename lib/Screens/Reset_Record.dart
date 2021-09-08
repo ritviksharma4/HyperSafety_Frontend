@@ -5,10 +5,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
-import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record_Confirmation.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
+import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
+import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
 class ResetRecordScreen extends StatefulWidget {
   @override
@@ -20,8 +20,10 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
 
   TextEditingController _empName = TextEditingController();
   TextEditingController _empId = TextEditingController();
+  // TextEditingController _empWarnings = TextEditingController();
 
-  Widget _addEmployeeNameField() {
+
+  Widget _ResetConfirmationNameField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -63,7 +65,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
     );
   }
 
-  Widget _addEmployeeIDField() {
+  Widget _ResetConfirmationIDField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -115,29 +117,35 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
         child: RaisedButton(
           splashColor: Colors.lightGreenAccent,
           elevation: 15.0,
-          onPressed: () async {
-            // if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
-            //   var node_response = await reset_records(
-            //       _empName.text.trimRight().toLowerCase(),
-            //       _empId.text.trimRight());
-            //   if (node_response == "Record Reset Successfully.") {
-            //     showSnackBar(context, node_response, Colors.green);
-            //     reset_screen();
-            //   } 
-            //   else if (node_response == "Go To Login Page.") {
-            //     _navigateToNextScreen(context, LoginScreen());
-            //     showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
-            //   } else {
-            //     showSnackBar(context, node_response, Colors.red);
-            //   }
-            // } else {
-            //   if (_empName.text.isEmpty) {
-            //     showSnackBar(context, "Name Field is Required.", Colors.red);
-            //   } else if (_empId.text.isEmpty) {
-            //     showSnackBar(context, "Employee ID is Required.", Colors.red);
-            //   }
-            // }
-            _navigateToNextScreen(context, AddEmployeeScreen());
+          // onPressed: () async {
+          //   if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
+          //     var node_response = await reset_records(
+          //         _empName.text.trimRight().toLowerCase(),
+          //         _empId.text.trimRight());
+          //     if (node_response == "Record Reset Successfully.") {
+          //       setState(() {
+                  
+          //       });
+          //       showSnackBar(context, node_response, Colors.green);
+          //       reset_screen();
+          //     } 
+          //     else if (node_response == "Go To Login Page.") {
+          //       _navigateToNextScreen(context, LoginScreen());
+          //       showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
+          //     } else {
+          //       showSnackBar(context, node_response, Colors.red);
+          //     }
+          //   } else {
+          //     if (_empName.text.isEmpty) {
+          //       showSnackBar(context, "Name Field is Required.", Colors.red);
+          //     } else if (_empId.text.isEmpty) {
+          //       showSnackBar(context, "Employee ID is Required.", Colors.red);
+          //     }
+          //   }
+          //   _navigateToNextScreen(context, ResetConfirmationScreen());
+          // },
+          onPressed: (){
+             _navigateToNextScreen(context, ResetConfirmationScreen());
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
@@ -230,11 +238,11 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                           ),
                           child: Column(
                             children: <Widget>[
-                              _addEmployeeNameField(),
+                              _ResetConfirmationNameField(),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 10.0)),
-                              _addEmployeeIDField(),
+                              _ResetConfirmationIDField(),
                             ],
                           ),
                         ),

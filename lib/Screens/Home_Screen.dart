@@ -11,6 +11,8 @@ import 'package:hr_tech_solutions/Screens/Delete_Employee.dart';
 import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,19 +20,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final jwt_storage = new FlutterSecureStorage();
-  // void checkPreviousSessionAndRedirect() async {
-  //   final _readJWTToken = await jwt_storage.read(key: "jwt");
-  //   if (_readJWTToken != null) {
-  //     Navigator.pushNamedAndRemoveUntil(
-  //         context, HomeScreen().toString(), (Route<dynamic> route) => true);
-  //   }
-  // }
 
-  // void initState() {
-  //   super.initState();
-  //   checkPreviousSessionAndRedirect();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    return true;
+  }
+
 
   Widget _buildAddEmployeeBtn() {
     return Container(
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Image.asset("assets/Images/Reset_Records.png",
-                    width: 40.0, height: 35.0),
+                    width: 40.0, height: 37),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10.0),
@@ -240,10 +240,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: [
                           Padding(
-                            padding: EdgeInsets.fromLTRB(50.0, 3.0, 0, 0),
+                            padding: EdgeInsets.fromLTRB(45.0, 3.0, 0, 0),
                             child: Container(
                               child: Text(
-                                'HR Tech Services',
+                                'SafeSpace Services',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'OpenSans',
@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                const EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: Align(
                               alignment: Alignment.topRight,
                               child: IconButton(
@@ -277,16 +277,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(
                             horizontal: 40.0,
-                            vertical: 50.0,
+                            vertical: 60.0,
                           ),
                           child: Column(
                             children: <Widget>[
                               _buildAddEmployeeBtn(),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                               _buildDispEmployeebtn(),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                               _buildResetRecordbtn(),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                               _buildDelEmployeebtn(),
                             ],
                           ),

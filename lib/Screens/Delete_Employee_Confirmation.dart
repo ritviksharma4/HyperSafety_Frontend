@@ -9,16 +9,14 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
-import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
 
-class ResetConfirmationScreen extends StatefulWidget {
+class DeleteConfirmationScreen extends StatefulWidget {
   @override
-  _ResetConfirmationScreenState createState() => _ResetConfirmationScreenState();
+  _DeleteConfirmationScreenState createState() => _DeleteConfirmationScreenState();
 }
 
-class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
+class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
   RegExp reg_exp = RegExp(r"(\w+)");
 
   PickedFile? _imageFile;
@@ -45,7 +43,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
     );
   }
 
-  Widget _ResetConfirmationNameField() {
+  Widget _DeleteConfirmationNameField() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40.0),
       child: Column(
@@ -89,7 +87,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
     );
   }
 
-  Widget _ResetConfirmationIDField() {
+  Widget _DeleteConfirmationIDField() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40.0),
       child: Column(
@@ -359,11 +357,11 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                           child: Column(
                             children: <Widget>[
                               _addImgCircleAvatar(),
-                              _ResetConfirmationNameField(),
+                              _DeleteConfirmationNameField(),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 10.0)),
-                              _ResetConfirmationIDField(),
+                              _DeleteConfirmationIDField(),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 10.0)),

@@ -172,7 +172,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 _empName.text.trimRight().toLowerCase(),
                 _empId.text.trimRight());
             if (node_response == "Record Reset Successfully.") {
-              showSnackBar(context, node_response, Colors.green);
+              showSnackBar(context, node_response, Colors.lightGreenAccent);
               reset_screen();
             } else {
               showSnackBar(context, node_response, Colors.red);
@@ -255,7 +255,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
                             child: Text(
-                              'Reset Records',
+                              'Reset Records 2.0',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'OpenSans',

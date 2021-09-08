@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
+import 'package:hr_tech_solutions/Screens/Reset_Record_Confirmation.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 
 class ResetRecordScreen extends StatefulWidget {
@@ -115,27 +116,28 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
           splashColor: Colors.lightGreenAccent,
           elevation: 15.0,
           onPressed: () async {
-            if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
-              var node_response = await reset_records(
-                  _empName.text.trimRight().toLowerCase(),
-                  _empId.text.trimRight());
-              if (node_response == "Record Reset Successfully.") {
-                showSnackBar(context, node_response, Colors.green);
-                reset_screen();
-              } 
-              else if (node_response == "Go To Login Page.") {
-                _navigateToNextScreen(context, LoginScreen());
-                showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
-              } else {
-                showSnackBar(context, node_response, Colors.red);
-              }
-            } else {
-              if (_empName.text.isEmpty) {
-                showSnackBar(context, "Name Field is Required.", Colors.red);
-              } else if (_empId.text.isEmpty) {
-                showSnackBar(context, "Employee ID is Required.", Colors.red);
-              }
-            }
+            // if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
+            //   var node_response = await reset_records(
+            //       _empName.text.trimRight().toLowerCase(),
+            //       _empId.text.trimRight());
+            //   if (node_response == "Record Reset Successfully.") {
+            //     showSnackBar(context, node_response, Colors.green);
+            //     reset_screen();
+            //   } 
+            //   else if (node_response == "Go To Login Page.") {
+            //     _navigateToNextScreen(context, LoginScreen());
+            //     showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
+            //   } else {
+            //     showSnackBar(context, node_response, Colors.red);
+            //   }
+            // } else {
+            //   if (_empName.text.isEmpty) {
+            //     showSnackBar(context, "Name Field is Required.", Colors.red);
+            //   } else if (_empId.text.isEmpty) {
+            //     showSnackBar(context, "Employee ID is Required.", Colors.red);
+            //   }
+            // }
+            _navigateToNextScreen(context, AddEmployeeScreen());
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(

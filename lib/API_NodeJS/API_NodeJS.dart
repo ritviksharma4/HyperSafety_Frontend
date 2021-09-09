@@ -201,6 +201,9 @@ display_records(bool showAll) async {
 }
 
 fetch_specific_employee_records(String empName, String empId) async {
+  final jwt_storage = new FlutterSecureStorage();
+  final _readJWTToken = await jwt_storage.read(key: "jwt");
+
   var host_ip = "192.168.29.30"; //Ritvik
   // var host_ip = "192.168.0.221"; //Akul
   //var host_ip = "192.168.1.41"; //Steve
@@ -213,13 +216,19 @@ fetch_specific_employee_records(String empName, String empId) async {
   int empWarnings;
   try {
     var request = http.Request("GET", uri);
+    request.headers["x-access-token"] = _readJWTToken;
     final response = await request.send();
     var response_body = await response.stream.bytesToString();
 
     if (response_body != "Error - Try Again." && response.statusCode == 200) {
       List employee_details = jsonDecode(response_body);
-      print(employee_details[0]["Warnings"]);
-      return employee_details[0]["Warnings"];
+      if (employee_details.isNotEmpty) {
+        employee_details[0]["EmployeeName"] = CapitalizeText(employee_details[0]["EmployeeName"]);
+        employee_details[0]["EmployeeID"] = CapitalizeText(employee_details[0]["EmployeeID"]);
+        return employee_details[0];
+      } else {
+        return "Employee Not Found - Check the Details.";
+      }
     } else if (response.statusCode == 401) {
       return "Go To Login Page.";
     } else {
@@ -228,6 +237,8 @@ fetch_specific_employee_records(String empName, String empId) async {
       return (error_message);
     }
   } catch (e) {
+    print("Error :");
+    print(e);
     return "Server Down - Please Try Again Later.";
   }
 }

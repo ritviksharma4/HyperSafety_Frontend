@@ -1,30 +1,40 @@
 // ignore: file_names
-// ignore: file_names
-// ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record_Confirmation.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
 class ResetRecordScreen extends StatefulWidget {
-  static String variable = "";
   static String specific_empName = "";
   static String specific_empId = "";
   static String specific_empWarnings = "";
+  static void reset_screen() {
+    specific_empName = "";
+    specific_empId = "";
+  }
+
   @override
   _ResetRecordScreenState createState() => _ResetRecordScreenState();
 }
 
 class _ResetRecordScreenState extends State<ResetRecordScreen> {
-  RegExp reg_exp = RegExp(r"(\w+)");
   TextEditingController _empName = TextEditingController();
   TextEditingController _empId = TextEditingController();
-  TextEditingController _empWarnings = TextEditingController();
+  String _empWarnings = "";
 
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _empName.text = ResetRecordScreen.specific_empName;
+      _empId.text = ResetRecordScreen.specific_empId;
+    });
+  }
 
   Widget _ResetConfirmationNameField() {
     return Column(
@@ -114,7 +124,6 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        // color: Colors.amber,
         padding: EdgeInsets.symmetric(vertical: 20.0),
         width: double.infinity,
         child: RaisedButton(
@@ -125,23 +134,20 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
               var node_response = await fetch_specific_employee_records(
                   _empName.text.trimRight().toLowerCase(),
                   _empId.text.trimRight());
-              if (node_response is int) {
-                int specific_empWarnings = node_response;
-                print("Specific Warnings: ");
-                print(specific_empWarnings);
+              if (node_response is Map<String, dynamic>) {
                 setState(() {
-                  ResetRecordScreen.specific_empName = _empName.text;
-                  ResetRecordScreen.specific_empId = _empId.text;
-                  ResetRecordScreen.specific_empWarnings = specific_empWarnings.toString();
-                  // ResetRecordScreen.variable = _empName.text;
+                  ResetRecordScreen.specific_empName =
+                      node_response["EmployeeName"];
+                  ResetRecordScreen.specific_empId =
+                      node_response["EmployeeID"];
+                  ResetRecordScreen.specific_empWarnings =
+                      node_response["Warnings"].toString();
                 });
                 _navigateToNextScreen(context, ResetConfirmationScreen());
-                // showSnackBar(context, node_response, Colors.green);
-                // reset_screen();
-              } 
-              else if (node_response == "Go To Login Page.") {
+              } else if (node_response == "Go To Login Page.") {
                 _navigateToNextScreen(context, LoginScreen());
-                showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
+                showSnackBar(context, "Session Expired - Please Login Again.",
+                    Colors.red);
               } else {
                 showSnackBar(context, node_response, Colors.red);
               }
@@ -153,9 +159,6 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
               }
             }
           },
-          // onPressed: (){
-          //    _navigateToNextScreen(context, ResetConfirmationScreen());
-          // },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
@@ -220,7 +223,8 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                reset_screen();
+                                _navigateToNextScreen(context, HomeScreen());
                               },
                             ),
                           ),
@@ -292,7 +296,9 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
   }
 
   void reset_screen() {
-    _empName.clear();
-    _empId.clear();
+    setState(() {
+      ResetRecordScreen.specific_empName = "";
+      ResetRecordScreen.specific_empId = "";
+    });
   }
 }

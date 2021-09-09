@@ -15,12 +15,11 @@ import 'package:hr_tech_solutions/Screens/Reset_Record.dart' as ResetRecords;
 
 class ResetConfirmationScreen extends StatefulWidget {
   @override
-  _ResetConfirmationScreenState createState() => _ResetConfirmationScreenState();
+  _ResetConfirmationScreenState createState() =>
+      _ResetConfirmationScreenState();
 }
 
 class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
-  RegExp reg_exp = RegExp(r"(\w+)");
-
   PickedFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
   bool _isImagePicked = false;
@@ -32,7 +31,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
   EdgeInsets padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     setState(() {
       _empName.text = ResetRecords.ResetRecordScreen.specific_empName;
@@ -74,10 +73,6 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
             child: TextField(
               enabled: false,
               controller: _empName,
-              inputFormatters: [
-                WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),
-                BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
-              ],
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'OpenSans',
@@ -151,7 +146,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'WARNINGS: ',
+            'WARNINGS',
             style: kLabelStyle,
           ),
           SizedBox(height: 10.0),
@@ -173,7 +168,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                 ),
                 border: InputBorder.none,
                 prefixIcon: Icon(
-                  Icons.apps_rounded,
+                  Icons.warning,
                   color: Colors.white,
                 ),
               ),
@@ -184,7 +179,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
     );
   }
 
-  Widget _addSubmitBtn() {
+  Widget _addConfirmationBtns() {
     return Container(
       child: Row(
         children: <Widget>[
@@ -192,50 +187,65 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: ButtonTheme(
               minWidth: 150,
-              height: 75,
               child: new RaisedButton(
-                splashColor: Colors.lightGreenAccent,
                 elevation: 15.0,
-                color: Color.fromRGBO(255, 255, 255, 0.9),
+                color: Colors.red,
                 child: Text(
-                  "SUBMIT",
+                  "CANCEL",
                   style: TextStyle(
-                    color: Color(0xFF527DAA),
+                    color: Colors.white,
                     letterSpacing: 1.5,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                onPressed: () {},
-                // padding: EdgeInsets.all(15.0),
+                onPressed: () {
+                  setState(() {
+                    _navigateToNextScreen(
+                        context, ResetRecords.ResetRecordScreen());
+                  });
+                },
+                padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
             ),
           ),
-          // Padding(padding: EdgeInsets.symmetric(horizontal: 30.0)),
           Padding(
             padding: EdgeInsets.fromLTRB(55, 0, 0, 0),
             child: ButtonTheme(
               minWidth: 150,
-              height: 75,
               child: new RaisedButton(
-                splashColor: Colors.lightGreenAccent,
                 elevation: 15.0,
-                color: Color.fromRGBO(255, 255, 255, 0.9),
+                color: Colors.green,
                 child: Text(
-                  "CANCEL",
+                  "SUBMIT",
                   style: TextStyle(
-                    color: Color(0xFF527DAA),
+                    color: Colors.white,
                     letterSpacing: 1.5,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  var node_response =
+                      await reset_records(_empName.text, _empId.text);
+                  if (node_response == "Record Reset Successfully.") {
+                    showSnackBar(context, node_response, Colors.green);
+                    ResetRecords.ResetRecordScreen.reset_screen();
+                    _navigateToNextScreen(
+                        context, ResetRecords.ResetRecordScreen());
+                  } else {
+                    showSnackBar(context, node_response, Colors.red);
+                    setState(() {
+                      _navigateToNextScreen(
+                          context, ResetRecords.ResetRecordScreen());
+                    });
+                  }
+                },
                 padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
@@ -247,56 +257,6 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
       ),
     );
   }
-  // Widget _addSubmitBtn() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(vertical: 20.0),
-  //     width: double.infinity,
-  //     child: RaisedButton(
-  // splashColor: Colors.lightGreenAccent,
-  // elevation: 15.0,
-  //       onPressed: () {
-  //         display_details();
-  //       },
-  //       // onPressed: () async {
-  //       //   if (_empName.text.isNotEmpty &&
-  //       //       _empId.text.isNotEmpty &&
-  //       //       _isImagePicked) {
-  //       //     var node_response = await upload_image(
-  //       //         File(_imageFile!.path),
-  //       //         _empName.text.trimRight().toLowerCase(),
-  //       //         _empId.text.trimRight());
-  //       //     if (node_response == "Record Reset Successfully.") {
-  //       //       showSnackBar(context, node_response, Colors.lightGreenAccent);
-  //       //       reset_screen();
-  //       //     } else {
-  //       //       showSnackBar(context, node_response, Colors.red);
-  //       //     }
-  //       //   } else {
-  //       //     if (_empName.text.isEmpty) {
-  //       //       showSnackBar(context, "Name Field is Required.", Colors.red);
-  //       //     } else if (_empId.text.isEmpty) {
-  //       //       showSnackBar(context, "Employee ID is Required.", Colors.red);
-  //       //     }
-  //       //   }
-  //       // },
-  // padding: EdgeInsets.all(15.0),
-  // shape: RoundedRectangleBorder(
-  //   borderRadius: BorderRadius.circular(30.0),
-  // ),
-  // color: Color.fromRGBO(255, 255, 255, 0.9),
-  // child: Text(
-  //   "SUBMIT",
-  //   style: TextStyle(
-  //     color: Color(0xFF527DAA),
-  //     letterSpacing: 1.5,
-  //     fontSize: 18.0,
-  //     fontWeight: FontWeight.bold,
-  //     fontFamily: 'OpenSans',
-  //   ),
-  // ),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -342,7 +302,8 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                _navigateToNextScreen(
+                                    context, ResetRecords.ResetRecordScreen());
                               },
                             ),
                           ),
@@ -364,7 +325,6 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                         child: SingleChildScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(
-                            // horizontal: 40.0,
                             vertical: 20.0,
                           ),
                           child: Column(
@@ -382,7 +342,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 50.0)),
-                              _addSubmitBtn(),
+                              _addConfirmationBtns(),
                             ],
                           ),
                         ),
@@ -413,16 +373,8 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
         );
   }
 
-  void reset_screen() {
-    setState(() {
-      _empName.clear();
-      _empId.clear();
-      _imageFile = null;
-      _isImagePicked = false;
-    });
-  }
-
-  void display_details() {
-    
+  void _navigateToNextScreen(BuildContext context, NewScreen) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => NewScreen));
   }
 }

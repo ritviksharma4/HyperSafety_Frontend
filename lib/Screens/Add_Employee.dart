@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
-import 'package:hr_tech_solutions/Custom_Library/timer_button.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
@@ -174,7 +174,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             var node_response = await upload_image(
                 File(_imageFile!.path),
                 _empName.text.trimRight().toLowerCase(),
-                _empId.text.trimRight());
+                _empId.text.trimRight().toUpperCase());
 
             if (node_response == "Employee Added Successfully.") {
               showSnackBar(context, node_response, Colors.green);
@@ -260,7 +260,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                _navigateToNextScreen(context, HomeScreen());
                               },
                             ),
                           ),

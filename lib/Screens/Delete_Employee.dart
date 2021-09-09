@@ -1,27 +1,42 @@
 // ignore: file_names
-// ignore: file_names
-// ignore: file_names
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
+import 'package:hr_tech_solutions/Screens/Delete_Employee_Confirmation.dart';
+import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
-import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Delete_Employee_Confirmation.dart';
 
 class DeleteEmployeeScreen extends StatefulWidget {
+  static String specific_empName = "";
+  static String specific_empId = "";
+  static String specific_empWarnings = "";
+  static void reset_screen() {
+    specific_empName = "";
+    specific_empId = "";
+  }
+
   @override
   _DeleteEmployeeScreenState createState() => _DeleteEmployeeScreenState();
 }
 
 class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
-  RegExp reg_exp = RegExp(r"(\w+)");
-
   TextEditingController _empName = TextEditingController();
   TextEditingController _empId = TextEditingController();
+  String _empWarnings = "";
 
-  Widget _addEmployeeNameField() {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _empName.text = DeleteEmployeeScreen.specific_empName;
+      _empId.text = DeleteEmployeeScreen.specific_empId;
+    });
+  }
+
+  Widget _DeleteConfirmationNameField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -36,10 +51,6 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
           height: 60.0,
           child: TextField(
             controller: _empName,
-            inputFormatters: [
-              WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),
-              BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
-            ],
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -63,7 +74,7 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
     );
   }
 
-  Widget _addEmployeeIDField() {
+  Widget _DeleteConfirmationIDField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -78,9 +89,6 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
           height: 60.0,
           child: TextField(
             controller: _empId,
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp('[ ]')),
-            ],
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -109,38 +117,40 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        // color: Colors.amber,
         padding: EdgeInsets.symmetric(vertical: 20.0),
         width: double.infinity,
         child: RaisedButton(
           splashColor: Colors.lightGreenAccent,
           elevation: 15.0,
-          // onPressed: () async {
-          //   if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
-          //     var node_response = await delete_employee(
-          //         _empName.text.trimRight().toLowerCase(),
-          //         _empId.text.trimRight());
-          //     if (node_response == "Employee Successfully Deleted.") {
-          //       showSnackBar(context, node_response, Colors.green);
-          //       reset_screen();
-          //     } 
-          //     else if (node_response == "Go To Login Page.") {
-          //       _navigateToNextScreen(context, LoginScreen());
-          //       showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
-          //     } 
-          //     else {
-          //       showSnackBar(context, node_response, Colors.red);
-          //     }
-          //   } else {
-          //     if (_empName.text.isEmpty) {
-          //       showSnackBar(context, "Name Field is Required.", Colors.red);
-          //     } else if (_empId.text.isEmpty) {
-          //       showSnackBar(context, "Employee ID is Required.", Colors.red);
-          //     }
-          //   }
-          // },
-          onPressed: (){
-             _navigateToNextScreen(context, DeleteConfirmationScreen());
+          onPressed: () async {
+            if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
+              var node_response = await fetch_specific_employee_records(
+                  _empName.text.trimRight().toLowerCase(),
+                  _empId.text.trimRight());
+              if (node_response is Map<String, dynamic>) {
+                setState(() {
+                  DeleteEmployeeScreen.specific_empName =
+                      node_response["EmployeeName"];
+                  DeleteEmployeeScreen.specific_empId =
+                      node_response["EmployeeID"];
+                  DeleteEmployeeScreen.specific_empWarnings =
+                      node_response["Warnings"].toString();
+                });
+                _navigateToNextScreen(context, DeleteConfirmationScreen());
+              } else if (node_response == "Go To Login Page.") {
+                _navigateToNextScreen(context, LoginScreen());
+                showSnackBar(context, "Session Expired - Please Login Again.",
+                    Colors.red);
+              } else {
+                showSnackBar(context, node_response, Colors.red);
+              }
+            } else {
+              if (_empName.text.isEmpty) {
+                showSnackBar(context, "Name Field is Required.", Colors.red);
+              } else if (_empId.text.isEmpty) {
+                showSnackBar(context, "Employee ID is Required.", Colors.red);
+              }
+            }
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
@@ -206,14 +216,15 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                reset_screen();
+                                _navigateToNextScreen(context, HomeScreen());
                               },
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
                             child: Text(
-                              'Delete Employee',
+                              'Remove Employee',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'OpenSans',
@@ -233,11 +244,11 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                           ),
                           child: Column(
                             children: <Widget>[
-                              _addEmployeeNameField(),
+                              _DeleteConfirmationNameField(),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 10.0)),
-                              _addEmployeeIDField(),
+                              _DeleteConfirmationIDField(),
                             ],
                           ),
                         ),
@@ -278,7 +289,9 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
   }
 
   void reset_screen() {
-    _empName.clear();
-    _empId.clear();
+    setState(() {
+      DeleteEmployeeScreen.specific_empName = "";
+      DeleteEmployeeScreen.specific_empId = "";
+    });
   }
 }

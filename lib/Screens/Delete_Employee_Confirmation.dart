@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label, sized_box_for_whitespace
+// ignore_for_file: use_key_in_widget_constructors, unused_import, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, import_of_legacy_library_into_null_safe, unused_local_variable, unused_field, avoid_init_to_null, prefer_final_fields, unnecessary_null_comparison, avoid_print, prefer_is_empty, non_constant_identifier_names, unnecessary_new, unused_label, sized_box_for_whitespace, library_prefixes
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
@@ -10,15 +10,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
+import 'package:hr_tech_solutions/Screens/Delete_Employee.dart' as DeleteEmployee;
 
 class DeleteConfirmationScreen extends StatefulWidget {
   @override
-  _DeleteConfirmationScreenState createState() => _DeleteConfirmationScreenState();
+  _DeleteConfirmationScreenState createState() =>
+      _DeleteConfirmationScreenState();
 }
 
 class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
-  RegExp reg_exp = RegExp(r"(\w+)");
-
   PickedFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
   bool _isImagePicked = false;
@@ -28,6 +28,17 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
   TextEditingController _empWarnings = TextEditingController();
 
   EdgeInsets padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _empName.text = DeleteEmployee.DeleteEmployeeScreen.specific_empName;
+      _empId.text = DeleteEmployee.DeleteEmployeeScreen.specific_empId;
+      _empWarnings.text = DeleteEmployee.DeleteEmployeeScreen.specific_empWarnings;
+      _imageFile = null;
+    });
+  }
 
   Widget _addImgCircleAvatar() {
     return CircleAvatar(
@@ -61,10 +72,6 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
             child: TextField(
               enabled: false,
               controller: _empName,
-              inputFormatters: [
-                WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),
-                BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
-              ],
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'OpenSans',
@@ -138,7 +145,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'WARNINGS: ',
+            'WARNINGS',
             style: kLabelStyle,
           ),
           SizedBox(height: 10.0),
@@ -160,7 +167,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                 ),
                 border: InputBorder.none,
                 prefixIcon: Icon(
-                  Icons.apps_rounded,
+                  Icons.warning,
                   color: Colors.white,
                 ),
               ),
@@ -171,7 +178,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
     );
   }
 
-  Widget _addSubmitBtn() {
+  Widget _addConfirmationBtns() {
     return Container(
       child: Row(
         children: <Widget>[
@@ -179,50 +186,65 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
             child: ButtonTheme(
               minWidth: 150,
-              height: 75,
               child: new RaisedButton(
-                splashColor: Colors.lightGreenAccent,
                 elevation: 15.0,
-                color: Color.fromRGBO(255, 255, 255, 0.9),
+                color: Colors.red,
                 child: Text(
-                  "SUBMIT",
+                  "CANCEL",
                   style: TextStyle(
-                    color: Color(0xFF527DAA),
+                    color: Colors.white,
                     letterSpacing: 1.5,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                onPressed: () {},
-                // padding: EdgeInsets.all(15.0),
+                onPressed: () {
+                  setState(() {
+                    _navigateToNextScreen(
+                        context, DeleteEmployee.DeleteEmployeeScreen());
+                  });
+                },
+                padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
             ),
           ),
-          // Padding(padding: EdgeInsets.symmetric(horizontal: 30.0)),
           Padding(
             padding: EdgeInsets.fromLTRB(55, 0, 0, 0),
             child: ButtonTheme(
               minWidth: 150,
-              height: 75,
               child: new RaisedButton(
-                splashColor: Colors.lightGreenAccent,
                 elevation: 15.0,
-                color: Color.fromRGBO(255, 255, 255, 0.9),
+                color: Colors.green,
                 child: Text(
-                  "CANCEL",
+                  "SUBMIT",
                   style: TextStyle(
-                    color: Color(0xFF527DAA),
+                    color: Colors.white,
                     letterSpacing: 1.5,
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  var node_response =
+                      await delete_employee(_empName.text.toLowerCase(), _empId.text.toLowerCase());
+                  if (node_response == "Employee Successfully Deleted.") {
+                    showSnackBar(context, node_response, Colors.green);
+                    DeleteEmployee.DeleteEmployeeScreen.reset_screen();
+                    _navigateToNextScreen(
+                        context, DeleteEmployee.DeleteEmployeeScreen());
+                  } else {
+                    showSnackBar(context, node_response, Colors.red);
+                    setState(() {
+                      _navigateToNextScreen(
+                          context, DeleteEmployee.DeleteEmployeeScreen());
+                    });
+                  }
+                },
                 padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
@@ -234,56 +256,6 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
       ),
     );
   }
-  // Widget _addSubmitBtn() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(vertical: 20.0),
-  //     width: double.infinity,
-  //     child: RaisedButton(
-  // splashColor: Colors.lightGreenAccent,
-  // elevation: 15.0,
-  //       onPressed: () {
-  //         display_details();
-  //       },
-  //       // onPressed: () async {
-  //       //   if (_empName.text.isNotEmpty &&
-  //       //       _empId.text.isNotEmpty &&
-  //       //       _isImagePicked) {
-  //       //     var node_response = await upload_image(
-  //       //         File(_imageFile!.path),
-  //       //         _empName.text.trimRight().toLowerCase(),
-  //       //         _empId.text.trimRight());
-  //       //     if (node_response == "Record Reset Successfully.") {
-  //       //       showSnackBar(context, node_response, Colors.lightGreenAccent);
-  //       //       reset_screen();
-  //       //     } else {
-  //       //       showSnackBar(context, node_response, Colors.red);
-  //       //     }
-  //       //   } else {
-  //       //     if (_empName.text.isEmpty) {
-  //       //       showSnackBar(context, "Name Field is Required.", Colors.red);
-  //       //     } else if (_empId.text.isEmpty) {
-  //       //       showSnackBar(context, "Employee ID is Required.", Colors.red);
-  //       //     }
-  //       //   }
-  //       // },
-  // padding: EdgeInsets.all(15.0),
-  // shape: RoundedRectangleBorder(
-  //   borderRadius: BorderRadius.circular(30.0),
-  // ),
-  // color: Color.fromRGBO(255, 255, 255, 0.9),
-  // child: Text(
-  //   "SUBMIT",
-  //   style: TextStyle(
-  //     color: Color(0xFF527DAA),
-  //     letterSpacing: 1.5,
-  //     fontSize: 18.0,
-  //     fontWeight: FontWeight.bold,
-  //     fontFamily: 'OpenSans',
-  //   ),
-  // ),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +301,8 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                _navigateToNextScreen(
+                                    context, DeleteEmployee.DeleteEmployeeScreen());
                               },
                             ),
                           ),
@@ -351,7 +324,6 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                         child: SingleChildScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(
-                            // horizontal: 40.0,
                             vertical: 20.0,
                           ),
                           child: Column(
@@ -369,7 +341,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 50.0)),
-                              _addSubmitBtn(),
+                              _addConfirmationBtns(),
                             ],
                           ),
                         ),
@@ -400,21 +372,8 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
         );
   }
 
-  void reset_screen() {
-    setState(() {
-      _empName.clear();
-      _empId.clear();
-      _imageFile = null;
-      _isImagePicked = false;
-    });
-  }
-
-  void display_details() {
-    setState(() {
-      _empName.text = "Akul Jain";
-      _empId.text = "RA007";
-      _empWarnings.text = "333";
-      _imageFile = null;
-    });
+  void _navigateToNextScreen(BuildContext context, NewScreen) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => NewScreen));
   }
 }

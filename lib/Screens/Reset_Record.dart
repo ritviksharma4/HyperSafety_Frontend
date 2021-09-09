@@ -51,10 +51,6 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
           height: 60.0,
           child: TextField(
             controller: _empName,
-            inputFormatters: [
-              WhitelistingTextInputFormatter(RegExp(r"[a-zA-Z]+|\s")),
-              BlacklistingTextInputFormatter(RegExp(r"^\s|[ ]{2,}")),
-            ],
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',

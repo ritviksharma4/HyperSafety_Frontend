@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:async/async.dart';
-import 'package:hr_tech_solutions/Employees_List/Exceeded_Warnings_List.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,18 +22,12 @@ admin_login(String admin_email, String admin_pass) async {
   var body = jsonEncode({"email": admin_email, "password": admin_pass});
 
   try {
-    // final request = http.Request("POST", uri);
-    // request.headers.addAll(<String, String>{
-    //   "Content-Type": "application/json",
-    // });
 
-    // request.body = body;
     final response = await http.post(
       uri,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"email": admin_email, "password": admin_pass}),
     );
-    // final response = await request.send();
     if (response.statusCode != 200) {
       var error_message = response.body;
       print(error_message);
@@ -105,9 +98,6 @@ delete_employee(String empName, String empId) async {
     final request = http.Request("DELETE", uri);
     request.headers["Content-Type"] = "application/json";
     request.headers["x-access-token"] = _readJWTToken;
-    // request.headers.addAll(<String, String>{
-    //   "Content-Type": "application/json",
-    // });
 
     request.body = body;
 
@@ -224,7 +214,6 @@ fetch_specific_employee_records(String empName, String empId) async {
       List employee_details = jsonDecode(response_body);
       if (employee_details.isNotEmpty) {
         employee_details[0]["EmployeeName"] = CapitalizeText(employee_details[0]["EmployeeName"]);
-        employee_details[0]["EmployeeID"] = CapitalizeText(employee_details[0]["EmployeeID"]);
         return employee_details[0];
       } else {
         return "Employee Not Found - Check the Details.";
@@ -233,7 +222,6 @@ fetch_specific_employee_records(String empName, String empId) async {
       return "Go To Login Page.";
     } else {
       var error_message = response_body;
-      // print(error_message);
       return (error_message);
     }
   } catch (e) {

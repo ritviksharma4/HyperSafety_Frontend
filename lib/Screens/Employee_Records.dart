@@ -4,10 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
-import 'package:hr_tech_solutions/Employees_List/Employees_List.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
+import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
 import 'package:hr_tech_solutions/Widgets/Scrollable_Widget.dart';
-import 'package:hr_tech_solutions/Employees_List/Exceeded_Warnings_List.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
 class FetchEmployeeRecordsScreen extends StatefulWidget {
@@ -39,7 +38,6 @@ class _FetchEmployeeRecordsScreenState
     if (node_response is String) {
       if (node_response == "Go To Login Page."){
         _navigateToNextScreen(context, LoginScreen());
-        // showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
         node_response = "Session Expired - Please Login Again.";
       }
       showSnackBar(context, node_response, Colors.red);
@@ -95,7 +93,6 @@ class _FetchEmployeeRecordsScreenState
 
   Widget _addScrollableWidget() {
     return Container(
-      // color: Colors.white,
       child: ScrollableWidget(child: buildDataTable()),
     );
   }
@@ -217,7 +214,7 @@ class _FetchEmployeeRecordsScreenState
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                _navigateToNextScreen(context, HomeScreen());
                               },
                             ),
                           ),

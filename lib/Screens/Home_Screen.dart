@@ -1,6 +1,4 @@
 // ignore: file_names
-// ignore: file_names
-// ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, unused_import, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
@@ -12,6 +10,7 @@ import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -265,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   size: 35.0,
                                 ),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  _navigateToNextScreen(context, LoginScreen());
                                 },
                               ),
                             ),

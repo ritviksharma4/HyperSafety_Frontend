@@ -1,6 +1,4 @@
 // ignore: file_names
-// ignore: file_names
-// ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
@@ -8,8 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
-import 'package:hr_tech_solutions/Screens/Logo_Screen.dart';
-
 
 class LoginScreen extends StatefulWidget {
   @override

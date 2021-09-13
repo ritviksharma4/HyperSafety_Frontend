@@ -13,13 +13,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // var host_ip = "192.168.0.6"; //Vivek
 // var host_ip = "192.168.0.6"; //Akul
-<<<<<<< HEAD
 var host_ip = "192.168.1.42"; //Steve
-// var host_ip = "192.168.0.6"; //Ritvik
-=======
 // var host_ip = "192.168.0.6"; //Steve
 var host_ip = "192.168.29.30"; //Ritvik
->>>>>>> 5221ec2f67ee50c8d2f7948938bd8f8c71c676a9
 // var host_ip = "192.168.0.6"; //Harsh
 
 admin_login(String admin_email, String admin_pass) async {

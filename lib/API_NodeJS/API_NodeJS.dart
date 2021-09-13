@@ -23,10 +23,6 @@ admin_login(String admin_email, String admin_pass) async {
   final jwt_storage = new FlutterSecureStorage();
   String? jwt_token;
   var body = jsonEncode({"email": admin_email, "password": admin_pass});
-<<<<<<< HEAD
-  print(body);
-=======
->>>>>>> 5221ec2f67ee50c8d2f7948938bd8f8c71c676a9
   try {
     final response = await http.post(
       uri,

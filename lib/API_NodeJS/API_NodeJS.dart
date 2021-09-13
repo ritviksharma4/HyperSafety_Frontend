@@ -11,9 +11,9 @@ import 'package:path/path.dart';
 import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-var host_ip = "192.168.0.6"; //Vivek
+// var host_ip = "192.168.0.6"; //Vivek
 // var host_ip = "192.168.0.6"; //Akul
-// var host_ip = "192.168.0.6"; //Steve
+var host_ip = "192.168.1.42"; //Steve
 // var host_ip = "192.168.0.6"; //Ritvik
 // var host_ip = "192.168.0.6"; //Harsh
 
@@ -22,13 +22,14 @@ admin_login(String admin_email, String admin_pass) async {
   final jwt_storage = new FlutterSecureStorage();
   String? jwt_token;
   var body = jsonEncode({"email": admin_email, "password": admin_pass});
-
+  print(body);
   try {
     final response = await http.post(
       uri,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"email": admin_email, "password": admin_pass}),
     );
+    print("smtg");
     if (response.statusCode != 200) {
       var error_message = response.body;
       print(error_message);

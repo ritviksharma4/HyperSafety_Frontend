@@ -13,7 +13,7 @@ class _LogoScreenState extends State<LogoScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 1, milliseconds: 500), () {
+    Timer(Duration(milliseconds: 500), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
@@ -23,7 +23,7 @@ class _LogoScreenState extends State<LogoScreen> {
   Widget build(BuildContext context) {
     return Container(
       // height: double.infinity,
-      width: double.infinity,
+      // width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,

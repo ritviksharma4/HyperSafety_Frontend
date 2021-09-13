@@ -10,7 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Delete_Employee.dart' as DeleteEmployee;
+import 'package:hr_tech_solutions/Screens/Delete_Employee.dart'
+    as DeleteEmployee;
 
 class DeleteConfirmationScreen extends StatefulWidget {
   @override
@@ -35,21 +36,24 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
     setState(() {
       _empName.text = DeleteEmployee.DeleteEmployeeScreen.specific_empName;
       _empId.text = DeleteEmployee.DeleteEmployeeScreen.specific_empId;
-      _empWarnings.text = DeleteEmployee.DeleteEmployeeScreen.specific_empWarnings;
+      _empWarnings.text =
+          DeleteEmployee.DeleteEmployeeScreen.specific_empWarnings;
       _imageFile = null;
     });
   }
 
   Widget _addImgCircleAvatar() {
+    var fetch_image = 'https://i.imgur.com/e8CDLci.jpeg';
     return CircleAvatar(
       radius: 80,
       backgroundColor: Colors.white,
       child: CircleAvatar(
         radius: 78,
         backgroundColor: Color(0xFF004e92),
-        backgroundImage: _imageFile == null
-            ? AssetImage("assets/Images/Default_Emp_Image.png")
-            : FileImage(File(_imageFile!.path)) as ImageProvider,
+        backgroundImage: NetworkImage(fetch_image)
+        // backgroundImage: _imageFile == null
+        //     ? AssetImage("assets/Images/Default_Emp_Image.png")
+        //     : FileImage(File(_imageFile!.path)) as ImageProvider,
       ),
     );
   }
@@ -230,8 +234,8 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  var node_response =
-                      await delete_employee(_empName.text.toLowerCase(), _empId.text.toLowerCase());
+                  var node_response = await delete_employee(
+                      _empName.text.toLowerCase(), _empId.text.toLowerCase());
                   if (node_response == "Employee Successfully Deleted.") {
                     showSnackBar(context, node_response, Colors.green);
                     DeleteEmployee.DeleteEmployeeScreen.reset_screen();
@@ -301,8 +305,8 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                _navigateToNextScreen(
-                                    context, DeleteEmployee.DeleteEmployeeScreen());
+                                _navigateToNextScreen(context,
+                                    DeleteEmployee.DeleteEmployeeScreen());
                               },
                             ),
                           ),

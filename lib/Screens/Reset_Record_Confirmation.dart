@@ -41,15 +41,17 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
   }
 
   Widget _addImgCircleAvatar() {
+    var fetch_image = 'https://i.imgur.com/e8CDLci.jpeg';
     return CircleAvatar(
       radius: 80,
       backgroundColor: Colors.white,
       child: CircleAvatar(
         radius: 78,
         backgroundColor: Color(0xFF004e92),
-        backgroundImage: _imageFile == null
-            ? AssetImage("assets/Images/Default_Emp_Image.png")
-            : FileImage(File(_imageFile!.path)) as ImageProvider,
+        backgroundImage: NetworkImage(fetch_image)
+        // backgroundImage: _imageFile == null
+        //     ? AssetImage("assets/Images/Default_Emp_Image.png")
+        //     : FileImage(File(_imageFile!.path)) as ImageProvider,
       ),
     );
   }
@@ -377,3 +379,5 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
         .push(MaterialPageRoute(builder: (context) => NewScreen));
   }
 }
+
+class ImgurImage {}

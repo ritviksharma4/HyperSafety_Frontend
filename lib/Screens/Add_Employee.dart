@@ -174,17 +174,16 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             var node_response = await upload_image(
                 File(_imageFile!.path),
                 _empName.text.trimRight().toLowerCase(),
-                _empId.text.trimRight().toUpperCase());
+                _empId.text.trimRight());
 
             if (node_response == "Employee Added Successfully.") {
               showSnackBar(context, node_response, Colors.green);
               reset_screen();
-            } 
-            else if (node_response == "Go To Login Page.") {
+            } else if (node_response == "Go To Login Page.") {
               _navigateToNextScreen(context, LoginScreen());
-              showSnackBar(context, "Session Expired - Please Login Again.", Colors.red);
-            }
-            else {
+              showSnackBar(
+                  context, "Session Expired - Please Login Again.", Colors.red);
+            } else {
               showSnackBar(context, node_response, Colors.red);
             }
           } else {
@@ -391,10 +390,10 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
   void reset_screen() {
     setState(() {
-    _empName.clear();
-    _empId.clear();
-    _imageFile = null;
-    _isImagePicked = false;
+      _empName.clear();
+      _empId.clear();
+      _imageFile = null;
+      _isImagePicked = false;
     });
   }
 

@@ -13,8 +13,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // var host_ip = "192.168.0.6"; //Vivek
 // var host_ip = "192.168.0.6"; //Akul
+<<<<<<< HEAD
 var host_ip = "192.168.1.42"; //Steve
 // var host_ip = "192.168.0.6"; //Ritvik
+=======
+// var host_ip = "192.168.0.6"; //Steve
+var host_ip = "192.168.29.30"; //Ritvik
+>>>>>>> 5221ec2f67ee50c8d2f7948938bd8f8c71c676a9
 // var host_ip = "192.168.0.6"; //Harsh
 
 admin_login(String admin_email, String admin_pass) async {
@@ -22,17 +27,19 @@ admin_login(String admin_email, String admin_pass) async {
   final jwt_storage = new FlutterSecureStorage();
   String? jwt_token;
   var body = jsonEncode({"email": admin_email, "password": admin_pass});
+<<<<<<< HEAD
   print(body);
+=======
+>>>>>>> 5221ec2f67ee50c8d2f7948938bd8f8c71c676a9
   try {
     final response = await http.post(
       uri,
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"email": admin_email, "password": admin_pass}),
+      body: body,
     );
     print("smtg");
     if (response.statusCode != 200) {
       var error_message = response.body;
-      print(error_message);
       return error_message;
     } else {
       var login_response = jsonDecode(response.body);
@@ -67,7 +74,6 @@ upload_image(File imageFile, String empName, String empId) async {
     request.files.add(multipartFile);
 
     var response = await request.send();
-    print(response.statusCode);
     if (response.statusCode == 401) {
       return "Go To Login Page.";
     } else if (response.statusCode != 200) {
@@ -171,7 +177,6 @@ display_records(bool showAll) async {
       return "Go To Login Page.";
     } else {
       var error_message = response_body;
-      // print(error_message);
       return (error_message);
     }
   } catch (e) {
@@ -180,7 +185,6 @@ display_records(bool showAll) async {
 }
 
 fetch_specific_employee_records(String empName, String empId) async {
-  print('Empname :' + empName);
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
 
@@ -213,14 +217,11 @@ fetch_specific_employee_records(String empName, String empId) async {
       return (error_message);
     }
   } catch (e) {
-    print("Error :");
-    print(e);
     return "Server Down - Please Try Again Later.";
   }
 }
 
 String CapitalizeText(String text) {
-  print(text);
   List<String> text_to_capitalize = text.split(" ");
 
   for (int i = 0; i < text_to_capitalize.length; i++) {

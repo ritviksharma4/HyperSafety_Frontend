@@ -48,13 +48,13 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
       radius: 80,
       backgroundColor: Colors.white,
       child: CircleAvatar(
-        radius: 78,
-        backgroundColor: Color(0xFF004e92),
-        backgroundImage: NetworkImage(fetch_image)
-        // backgroundImage: _imageFile == null
-        //     ? AssetImage("assets/Images/Default_Emp_Image.png")
-        //     : FileImage(File(_imageFile!.path)) as ImageProvider,
-      ),
+          radius: 78,
+          backgroundColor: Color(0xFF004e92),
+          backgroundImage: NetworkImage(fetch_image)
+          // backgroundImage: _imageFile == null
+          //     ? AssetImage("assets/Images/Default_Emp_Image.png")
+          //     : FileImage(File(_imageFile!.path)) as ImageProvider,
+          ),
     );
   }
 
@@ -235,7 +235,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
                 ),
                 onPressed: () async {
                   var node_response = await delete_employee(
-                      _empName.text.toLowerCase(), _empId.text.toLowerCase());
+                      _empName.text.toLowerCase(), _empId.text);
                   if (node_response == "Employee Successfully Deleted.") {
                     showSnackBar(context, node_response, Colors.green);
                     DeleteEmployee.DeleteEmployeeScreen.reset_screen();

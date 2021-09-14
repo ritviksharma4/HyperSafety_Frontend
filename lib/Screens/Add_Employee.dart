@@ -162,7 +162,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
   Widget _addSubmitBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
+      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
       width: double.infinity,
       child: RaisedButton(
         splashColor: Colors.lightGreenAccent,
@@ -240,65 +240,55 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 ),
               ),
               Container(
-                child: SingleChildScrollView(
-                  // physics: AlwaysScrollableScrollPhysics(),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: IconButton(
-                              color: Colors.white,
-                              icon: Icon(
-                                Icons.arrow_back_ios_new_rounded,
-                                size: 25.5,
-                              ),
-                              onPressed: () {
-                                _navigateToNextScreen(context, HomeScreen());
-                              },
+                padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: IconButton(
+                            color: Colors.white,
+                            icon: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 25.5,
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
-                            child: Text(
-                              'Add New Employee',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        child: SingleChildScrollView(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 40.0,
-                            vertical: 20.0,
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              _addImgCircleAvatar(),
-                              _addEmployeeNameField(),
-                              Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 10.0)),
-                              _addEmployeeIDField(),
-                              _addUploadImageBtn(),
-                              _addSubmitBtn(),
-                            ],
+                            onPressed: () {
+                              _navigateToNextScreen(context, HomeScreen());
+                            },
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30.0, 0, 0, 0),
+                          child: Text(
+                            'Add New Employee',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(40, 40, 40, 0),
+                      child: Column(
+                        children: <Widget>[
+                          _addImgCircleAvatar(),
+                          _addEmployeeNameField(),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.0)),
+                          _addEmployeeIDField(),
+                          _addUploadImageBtn(),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: _addSubmitBtn()),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               )
             ],

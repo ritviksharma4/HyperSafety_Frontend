@@ -225,7 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                // height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding:

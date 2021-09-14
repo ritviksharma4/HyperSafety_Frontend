@@ -12,14 +12,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     return true;
   }
-
 
   Widget _buildAddEmployeeBtn() {
     return Container(
@@ -45,9 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 40.0, height: 40.0),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  'ADD EMPLOYEE',
+                  'ADD NEW EMPLOYEE',
                   style: TextStyle(
                     color: Color(0xFF527DAA),
                     letterSpacing: 1.25,
@@ -76,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildDelEmployeebtn() {
     return Container(
-      
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
@@ -89,8 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 40.0, height: 40.0),
               ),
               Container(
-                
-                margin: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   'DELETE EMPLOYEE',
                   style: TextStyle(
@@ -121,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildDispEmployeebtn() {
     return Container(
-      
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
@@ -134,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 40.0, height: 40.0),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   'DISPLAY EMPLOYEES',
                   style: TextStyle(
@@ -165,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildResetRecordbtn() {
     return Container(
-      
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
@@ -178,9 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 40.0, height: 37),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  'RESET RECORDS',
+                  'RESET WARNINGS',
                   style: TextStyle(
                     color: Color(0xFF527DAA),
                     letterSpacing: 1.25,
@@ -238,51 +231,59 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
                         children: [
-                              Container(
-                              color: Colors.red,
-                              child: Text(
-                                'SafeSpace Services',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'OpenSans',
-                                  fontSize: 32.0,
-                                  fontWeight: FontWeight.bold,
+                          Container(
+                            padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  'SafeSpace Services',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'OpenSans',
+                                    fontSize: 32.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            ),                            
-                              IconButton(
-                                color: Colors.amber[900],
-                                icon: Icon(
-                                  Icons.power_settings_new_rounded,
-                                  size: 35.0,
+                                IconButton(
+                                  color: Colors.amber[900],
+                                  icon: Icon(
+                                    Icons.power_settings_new_rounded,
+                                    size: 40.0,
+                                  ),
+                                  onPressed: () {
+                                    _navigateToNextScreen(
+                                        context, LoginScreen());
+                                  },
                                 ),
-                                onPressed: () {
-                                  _navigateToNextScreen(context, LoginScreen());
-                                },
-                              ),
-           
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       Container(
-                        
                         child: SingleChildScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(
                             horizontal: 40.0,
-                            vertical: 60.0,
+                            vertical: 75.0,
                           ),
                           child: Column(
                             children: <Widget>[
                               _buildAddEmployeeBtn(),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
                               _buildDispEmployeebtn(),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
                               _buildResetRecordbtn(),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
                               _buildDelEmployeebtn(),
                             ],
                           ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:hr_tech_solutions/Screens/Home_Screen_Test.dart';
+import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
@@ -240,9 +240,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 ),
               ),
               Container(
-                height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  // physics: AlwaysScrollableScrollPhysics(),
                   padding:
                       EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
                   child: Column(

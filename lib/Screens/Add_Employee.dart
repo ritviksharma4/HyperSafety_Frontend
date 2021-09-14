@@ -249,10 +249,12 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     child: Column(
                       children: <Widget>[
                         Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(left: 10),
                               child: IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
                                 color: Colors.white,
                                 icon: Icon(
                                   Icons.arrow_back_ios_new_rounded,
@@ -263,15 +265,18 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                 },
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(30.0, 0, 0, 0),
-                              child: Text(
-                                'Add New Employee',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'OpenSans',
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 35.5),
+                                child: Text(
+                                  "Add Employee",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'OpenSans',
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -294,7 +299,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       ],
                     ),
                   )),
-              Container(                
+              Container(
                 padding: EdgeInsets.fromLTRB(40, 40, 40, 60),
                 alignment: Alignment.bottomCenter,
                 child: _addSubmitBtn(),

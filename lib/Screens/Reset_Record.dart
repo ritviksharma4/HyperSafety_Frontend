@@ -181,6 +181,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -203,7 +204,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                 ),
               ),
               Container(
-                height: double.infinity,
+                // height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding:
@@ -212,10 +213,12 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomCenter,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
                             child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
                               color: Colors.white,
                               icon: Icon(
                                 Icons.arrow_back_ios_new_rounded,
@@ -227,19 +230,26 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                               },
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
-                            child: Text(
-                              'Reset Records',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 25.5),
+                              child: Text(
+                                "Reset Records",
+                                //https://stackoverflow.com/questions/51587003/how-to-center-only-one-element-in-a-row-of-2-elements-in-flutter
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
                       ),
                       Container(
                         child: SingleChildScrollView(

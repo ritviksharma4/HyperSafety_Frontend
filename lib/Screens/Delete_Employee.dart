@@ -178,6 +178,7 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -209,10 +210,12 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomCenter,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
                             child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
                               color: Colors.white,
                               icon: Icon(
                                 Icons.arrow_back_ios_new_rounded,
@@ -224,19 +227,25 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                               },
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
-                            child: Text(
-                              'Remove Employee',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 35.5),
+                              child: Text(
+                                "Delete Employee",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
                       ),
                       Container(
                         child: SingleChildScrollView(

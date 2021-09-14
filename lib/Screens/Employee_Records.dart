@@ -36,7 +36,7 @@ class _FetchEmployeeRecordsScreenState
     var node_response = await display_records(showAll);
 
     if (node_response is String) {
-      if (node_response == "Go To Login Page."){
+      if (node_response == "Go To Login Page.") {
         _navigateToNextScreen(context, LoginScreen());
         node_response = "Session Expired - Please Login Again.";
       }
@@ -204,10 +204,12 @@ class _FetchEmployeeRecordsScreenState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
                             child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
                               color: Colors.white,
                               icon: Icon(
                                 Icons.arrow_back_ios_new_rounded,
@@ -218,15 +220,18 @@ class _FetchEmployeeRecordsScreenState
                               },
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(35.0, 0, 0, 0),
-                            child: Text(
-                              'Employee Records',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 35.5),
+                              child: Text(
+                                "Employee Records",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),

@@ -19,7 +19,7 @@ class ResetConfirmationScreen extends StatefulWidget {
 }
 
 class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
-  PickedFile? _imageFile;
+  String? _imageURL;
   final ImagePicker _picker = ImagePicker();
   bool _isImagePicked = false;
 
@@ -36,23 +36,18 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
       _empName.text = ResetRecords.ResetRecordScreen.specific_empName;
       _empId.text = ResetRecords.ResetRecordScreen.specific_empId;
       _empWarnings.text = ResetRecords.ResetRecordScreen.specific_empWarnings;
-      _imageFile = null;
+      _imageURL = ResetRecords.ResetRecordScreen.specific_empImageURL;
     });
   }
 
   Widget _addImgCircleAvatar() {
-    var fetch_image = 'https://i.imgur.com/e8CDLci.jpeg';
     return CircleAvatar(
       radius: 80,
       backgroundColor: Colors.white,
       child: CircleAvatar(
-        radius: 78,
-        backgroundColor: Color(0xFF004e92),
-        backgroundImage: NetworkImage(fetch_image)
-        // backgroundImage: _imageFile == null
-        //     ? AssetImage("assets/Images/Default_Emp_Image.png")
-        //     : FileImage(File(_imageFile!.path)) as ImageProvider,
-      ),
+          radius: 78,
+          backgroundColor: Color(0xFF004e92),
+          backgroundImage: NetworkImage(_imageURL!)),
     );
   }
 

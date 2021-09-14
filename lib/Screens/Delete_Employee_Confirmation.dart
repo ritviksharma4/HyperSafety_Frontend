@@ -20,7 +20,7 @@ class DeleteConfirmationScreen extends StatefulWidget {
 }
 
 class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
-  PickedFile? _imageFile;
+  String? _imageURL;
   final ImagePicker _picker = ImagePicker();
   bool _isImagePicked = false;
 
@@ -38,23 +38,18 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen> {
       _empId.text = DeleteEmployee.DeleteEmployeeScreen.specific_empId;
       _empWarnings.text =
           DeleteEmployee.DeleteEmployeeScreen.specific_empWarnings;
-      _imageFile = null;
+      _imageURL = DeleteEmployee.DeleteEmployeeScreen.specific_empImageURL;
     });
   }
 
   Widget _addImgCircleAvatar() {
-    var fetch_image = 'https://i.imgur.com/e8CDLci.jpeg';
     return CircleAvatar(
       radius: 80,
       backgroundColor: Colors.white,
       child: CircleAvatar(
           radius: 78,
           backgroundColor: Color(0xFF004e92),
-          backgroundImage: NetworkImage(fetch_image)
-          // backgroundImage: _imageFile == null
-          //     ? AssetImage("assets/Images/Default_Emp_Image.png")
-          //     : FileImage(File(_imageFile!.path)) as ImageProvider,
-          ),
+          backgroundImage: NetworkImage(_imageURL!)),
     );
   }
 

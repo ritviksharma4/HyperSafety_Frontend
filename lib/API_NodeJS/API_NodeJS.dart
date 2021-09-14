@@ -12,9 +12,9 @@ import 'package:hr_tech_solutions/Emp_Model/Employee.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // var host_ip = "192.168.0.6"; //Vivek
-// var host_ip = "192.168.0.6"; //Akul
-var host_ip = "192.168.1.42"; //Steve
-//var host_ip = "192.168.29.30"; //Ritvik
+var host_ip = "192.168.0.221"; //Akul
+// var host_ip = "192.168.0.6"; //Steve
+// var host_ip = "192.168.29.30"; //Ritvik
 // var host_ip = "192.168.0.6"; //Harsh
 
 admin_login(String admin_email, String admin_pass) async {
@@ -28,7 +28,6 @@ admin_login(String admin_email, String admin_pass) async {
       headers: {"Content-Type": "application/json"},
       body: body,
     );
-    print("smtg");
     if (response.statusCode != 200) {
       var error_message = response.body;
       return error_message;
@@ -43,7 +42,7 @@ admin_login(String admin_email, String admin_pass) async {
   }
 }
 
-upload_image(File imageFile, String empName, String empId) async {
+upload_image(File imageFile, String empName, String empID) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
 
@@ -56,7 +55,7 @@ upload_image(File imageFile, String empName, String empId) async {
     var request = http.MultipartRequest("POST", uri);
     request.headers["x-access-token"] = _readJWTToken;
     request.fields["empName"] = empName;
-    request.fields["empId"] = empId;
+    request.fields["empID"] = empID;
 
     var multipartFile = http.MultipartFile(
         'employee_image', imageFile.openRead(), length,
@@ -79,12 +78,12 @@ upload_image(File imageFile, String empName, String empId) async {
   }
 }
 
-delete_employee(String empName, String empId) async {
+delete_employee(String empName, String empID) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
-  var body = jsonEncode({"empName": empName, "empId": empId});
+  var body = jsonEncode({"empName": empName, "empID": empID});
 
   try {
     final request = http.Request("DELETE", uri);
@@ -108,12 +107,12 @@ delete_employee(String empName, String empId) async {
   }
 }
 
-reset_records(String empName, String empId) async {
+reset_records(String empName, String empID) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
 
   var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
-  var body = jsonEncode({"empName": empName, "empId": empId});
+  var body = jsonEncode({"empName": empName, "empID": empID});
 
   try {
     final request = http.Request("PUT", uri);
@@ -175,14 +174,14 @@ display_records(bool showAll) async {
   }
 }
 
-fetch_specific_employee_records(String empName, String empId) async {
+fetch_specific_employee_records(String empName, String empID) async {
   final jwt_storage = new FlutterSecureStorage();
   final _readJWTToken = await jwt_storage.read(key: "jwt");
 
   var uri = Uri.parse("http://" +
       host_ip +
       ":7091/api/employee_services/" +
-      empId +
+      empID +
       "/" +
       empName);
   int empWarnings;

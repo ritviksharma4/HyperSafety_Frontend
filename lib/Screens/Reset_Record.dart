@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
+import 'package:hr_tech_solutions/Screens/Home_Screen_Test.dart';
 import 'package:hr_tech_solutions/Screens/Reset_Record_Confirmation.dart';
 import 'package:hr_tech_solutions/Utilities/Utilities.dart';
 import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
@@ -13,6 +13,7 @@ class ResetRecordScreen extends StatefulWidget {
   static String specific_empName = "";
   static String specific_empId = "";
   static String specific_empWarnings = "";
+  static String specific_empImageURL = "";
   static void reset_screen() {
     specific_empName = "";
     specific_empId = "";
@@ -138,6 +139,8 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                       node_response["EmployeeID"];
                   ResetRecordScreen.specific_empWarnings =
                       node_response["Warnings"].toString();
+                  ResetRecordScreen.specific_empImageURL =
+                      node_response["ImageURL"].toString();
                 });
                 _navigateToNextScreen(context, ResetConfirmationScreen());
               } else if (node_response == "Go To Login Page.") {

@@ -239,6 +239,7 @@ class _FetchEmployeeRecordsScreenState
                         ],
                       ),
                       Container(
+                        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
                         child: SingleChildScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(

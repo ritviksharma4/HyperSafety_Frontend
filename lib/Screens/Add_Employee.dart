@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
+import 'package:HyperSafety/Screens/Home_Screen.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
+import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
-import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
+import 'package:HyperSafety/Utilities/Utilities.dart';
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
   @override
@@ -298,8 +298,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         ),
                       ],
                     ),
-                  )
-                  ),
+                  )),
               Container(
                 padding: EdgeInsets.fromLTRB(40, 40, 40, 60),
                 alignment: Alignment.bottomCenter,

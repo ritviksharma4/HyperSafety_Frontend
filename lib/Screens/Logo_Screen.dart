@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 
 class LogoScreen extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class _LogoScreenState extends State<LogoScreen> {
         child: Align(
           alignment: Alignment.center,
           child: Image.asset('assets/Images/PlaceHolder_Logo.png',
-                height: 200, fit: BoxFit.fill),
+              height: 200, fit: BoxFit.fill),
         ),
       ),
     );

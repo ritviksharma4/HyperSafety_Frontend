@@ -1,2 +1,2 @@
-# HR_Tech_Solutions
+# HyperSafety
 An Employee Management App for Mask-Detection and Face Recognition

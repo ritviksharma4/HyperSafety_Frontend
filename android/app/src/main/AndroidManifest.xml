@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hr_tech_solutions">
+    package="com.example.HyperSafety">
    <application
-        android:label="hr_tech_solutions"
-        android:icon="@mipmap/ic_launcher">
+        android:label="HyperSafety"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

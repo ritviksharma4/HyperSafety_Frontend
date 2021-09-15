@@ -7,10 +7,10 @@ import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
+import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
-import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Reset_Record.dart' as ResetRecords;
+import 'package:HyperSafety/Utilities/Utilities.dart';
+import 'package:HyperSafety/Screens/Reset_Record.dart' as ResetRecords;
 
 class ResetConfirmationScreen extends StatefulWidget {
   @override

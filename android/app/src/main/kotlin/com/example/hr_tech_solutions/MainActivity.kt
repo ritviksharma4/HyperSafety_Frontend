@@ -1,4 +1,4 @@
-package com.example.hr_tech_solutions
+package com.example.HyperSafety
 
 import io.flutter.embedding.android.FlutterActivity
 

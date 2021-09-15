@@ -3,14 +3,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
-import 'package:hr_tech_solutions/Screens/Add_Employee.dart';
-import 'package:hr_tech_solutions/Screens/Delete_Employee.dart';
-import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
-import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
+import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
+import 'package:HyperSafety/Screens/Add_Employee.dart';
+import 'package:HyperSafety/Screens/Delete_Employee.dart';
+import 'package:HyperSafety/Screens/Employee_Records.dart';
+import 'package:HyperSafety/Screens/Reset_Record.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

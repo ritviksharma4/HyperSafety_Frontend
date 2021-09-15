@@ -7,11 +7,10 @@ import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
+import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
-import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/Screens/Delete_Employee.dart'
-    as DeleteEmployee;
+import 'package:HyperSafety/Utilities/Utilities.dart';
+import 'package:HyperSafety/Screens/Delete_Employee.dart' as DeleteEmployee;
 
 class DeleteConfirmationScreen extends StatefulWidget {
   @override

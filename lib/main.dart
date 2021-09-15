@@ -1,15 +1,14 @@
 // ignore_for_file: unused_import, deprecated_member_use, prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
-import 'package:hr_tech_solutions/Screens/Add_Employee.dart';
-import 'package:hr_tech_solutions/Screens/Delete_Employee.dart';
-import 'package:hr_tech_solutions/Screens/Employee_Records.dart';
-import 'package:hr_tech_solutions/Screens/Reset_Record.dart';
-import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
+import 'package:HyperSafety/Screens/Home_Screen.dart';
+import 'package:HyperSafety/Screens/Add_Employee.dart';
+import 'package:HyperSafety/Screens/Delete_Employee.dart';
+import 'package:HyperSafety/Screens/Employee_Records.dart';
+import 'package:HyperSafety/Screens/Reset_Record.dart';
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hr_tech_solutions/Screens/Logo_Screen.dart';
-
+import 'package:HyperSafety/Screens/Logo_Screen.dart';
 
 // flutter run --no-sound-null-safety
 void main() {

@@ -3,11 +3,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hr_tech_solutions/Screens/Home_Screen.dart';
-import 'package:hr_tech_solutions/Screens/Delete_Employee_Confirmation.dart';
-import 'package:hr_tech_solutions/Utilities/Utilities.dart';
-import 'package:hr_tech_solutions/API_NodeJS/API_NodeJS.dart';
-import 'package:hr_tech_solutions/Screens/Login_Screen.dart';
+import 'package:HyperSafety/Screens/Home_Screen.dart';
+import 'package:HyperSafety/Screens/Delete_Employee_Confirmation.dart';
+import 'package:HyperSafety/Utilities/Utilities.dart';
+import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 
 class DeleteEmployeeScreen extends StatefulWidget {
   static String specific_empName = "";

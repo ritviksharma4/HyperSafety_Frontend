@@ -298,7 +298,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         ),
                       ],
                     ),
-                  )),
+                  )
+                  ),
               Container(
                 padding: EdgeInsets.fromLTRB(40, 40, 40, 60),
                 alignment: Alignment.bottomCenter,

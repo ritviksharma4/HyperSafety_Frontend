@@ -288,10 +288,12 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
                             child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
                               color: Colors.white,
                               icon: Icon(
                                 Icons.arrow_back_ios_new_rounded,
@@ -303,15 +305,18 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                               },
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(30.0, 0, 0, 0),
-                            child: Text(
-                              'Confirmation Page',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 35.5),
+                              child: Text(
+                                "Confirmation",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -335,10 +340,6 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                                   padding:
                                       EdgeInsets.symmetric(vertical: 10.0)),
                               _addWarningField(),
-                              Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 50.0)),
-                              _addConfirmationBtns(),
                             ],
                           ),
                         ),
@@ -346,7 +347,12 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                     ],
                   ),
                 ),
-              )
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: 60),
+                alignment: Alignment.bottomCenter,
+                child: _addConfirmationBtns(),
+              ),
             ],
           ),
         ),

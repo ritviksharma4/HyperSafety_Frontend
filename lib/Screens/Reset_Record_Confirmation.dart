@@ -178,9 +178,10 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
   Widget _addConfirmationBtns() {
     return Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            padding: EdgeInsets.only(right: 15),
             child: ButtonTheme(
               minWidth: 150,
               child: new RaisedButton(
@@ -210,7 +211,7 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(55, 0, 0, 0),
+            padding: EdgeInsets.only(left: 15),
             child: ButtonTheme(
               minWidth: 150,
               child: new RaisedButton(

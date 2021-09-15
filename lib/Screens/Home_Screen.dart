@@ -41,10 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Image.asset("assets/Images/Add_Employee.png",
                     width: 40.0, height: 40.0),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 20.0),
+              Padding(padding: EdgeInsets.only(left: 10)),
+              Expanded(
                 child: Text(
-                  'ADD NEW EMPLOYEE',
+                  'ADD EMPLOYEE',
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Color(0xFF527DAA),
                     letterSpacing: 1.25,
@@ -84,10 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Image.asset("assets/Images/Del_Employee.png",
                     width: 40.0, height: 40.0),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 20.0),
+              Padding(padding: EdgeInsets.only(left: 10)),
+              Expanded(
                 child: Text(
                   'DELETE EMPLOYEE',
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Color(0xFF527DAA),
                     letterSpacing: 1.25,
@@ -127,10 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Image.asset("assets/Images/Emp_Records.png",
                     width: 40.0, height: 40.0),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 20),
+              Padding(padding: EdgeInsets.only(left: 10)),
+              Expanded(
                 child: Text(
                   'DISPLAY EMPLOYEES',
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Color(0xFF527DAA),
                     letterSpacing: 1.25,
@@ -170,10 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Image.asset("assets/Images/Reset_Records.png",
                     width: 40.0, height: 37),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 20.0),
+              Padding(padding: EdgeInsets.only(left: 10)),
+              Expanded(
                 child: Text(
                   'RESET WARNINGS',
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Color(0xFF527DAA),
                     letterSpacing: 1.25,

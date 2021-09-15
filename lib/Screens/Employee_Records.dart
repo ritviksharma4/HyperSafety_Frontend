@@ -198,6 +198,7 @@ class _FetchEmployeeRecordsScreenState
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
                   padding:
                       EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
                   child: Column(

@@ -18,7 +18,9 @@ class ResetConfirmationScreen extends StatefulWidget {
       _ResetConfirmationScreenState();
 }
 
-class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
+class _ResetConfirmationScreenState extends State<ResetConfirmationScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
   String? _imageURL;
   final ImagePicker _picker = ImagePicker();
   bool _isImagePicked = false;
@@ -32,6 +34,9 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
   @override
   void initState() {
     super.initState();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController!.repeat();
     setState(() {
       _empName.text = ResetRecords.ResetRecordScreen.specific_empName;
       _empId.text = ResetRecords.ResetRecordScreen.specific_empId;
@@ -228,8 +233,21 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen> {
                   ),
                 ),
                 onPressed: () async {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            valueColor: animationController!.drive(ColorTween(
+                                begin: Colors.lightBlue[600],
+                                end: Colors.lightGreenAccent[400])),
+                          ),
+                        );
+                      });
                   var node_response =
                       await reset_records(_empName.text, _empId.text);
+                  Navigator.pop(context);
                   if (node_response == "Record Reset Successfully.") {
                     showSnackBar(context, node_response, Colors.green);
                     ResetRecords.ResetRecordScreen.reset_screen();

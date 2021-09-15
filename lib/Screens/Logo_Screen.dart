@@ -22,8 +22,6 @@ class _LogoScreenState extends State<LogoScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: double.infinity,
-      // width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -38,7 +36,7 @@ class _LogoScreenState extends State<LogoScreen> {
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Image.asset('assets/Images/PlaceHolder_Logo.png',
+          child: Image.asset('assets/Images/HyperSafety_Logo.png',
               height: 200, fit: BoxFit.fill),
         ),
       ),

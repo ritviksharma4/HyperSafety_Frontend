@@ -1,5 +1,5 @@
 name: HyperSafety
-description: HR Tech Solutions for Employee Management.
+description: HyperSafety Services for Safe Work Environment.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -30,7 +30,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/Images/PlaceHolder_1.png"
+  image_path: "assets/Images/AppIcon_1.jpeg"
 
 # The following section is specific to Flutter.
 flutter:
@@ -44,7 +44,7 @@ flutter:
     - assets/Images/Emp_Records.png
     - assets/Images/Reset_Records.png
     - assets/Images/Default_Emp_Image.png
-    - assets/Images/PlaceHolder_Logo.png
+    - assets/Images/HyperSafety_Logo.png
 
   fonts:
     - family: OpenSans

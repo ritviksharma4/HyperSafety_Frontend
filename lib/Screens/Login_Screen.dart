@@ -1,11 +1,9 @@
-// ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:HyperSafety/Utilities/Utilities.dart';
-// import 'package:HyperSafety/Screens/Home_Screen.dart';
 import 'package:HyperSafety/Screens/Home_Screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -153,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
         CircleAvatar(
             radius: 80.0,
             backgroundColor: Colors.transparent,
-            backgroundImage: AssetImage("assets/Images/PlaceHolder_Logo.png")),
+            backgroundImage: AssetImage("assets/Images/HyperSafety_Logo.png")),
       ],
     );
   }

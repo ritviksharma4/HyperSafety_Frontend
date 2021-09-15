@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 70),
                               child: Text(
-                                "HTFE Services",
+                                "HyperSafety Services",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,

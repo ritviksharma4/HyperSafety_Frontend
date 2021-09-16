@@ -13,7 +13,7 @@ class _LogoScreenState extends State<LogoScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 500), () {
+    Timer(Duration(milliseconds: 750), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
@@ -36,7 +36,7 @@ class _LogoScreenState extends State<LogoScreen> {
       child: Container(
         child: Align(
           alignment: Alignment.center,
-          child: Image.asset('assets/Images/HyperSafety_Logo.png',
+          child: Image.asset('assets/Images/Logo.png',
               height: 200, fit: BoxFit.fill),
         ),
       ),

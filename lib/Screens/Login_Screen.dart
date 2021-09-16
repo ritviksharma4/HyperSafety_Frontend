@@ -1,10 +1,14 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:HyperSafety/Utilities/Utilities.dart';
 import 'package:HyperSafety/Screens/Home_Screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -146,13 +150,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _addLogoToLoginPage() {
-    return Column(
-      children: [
-        CircleAvatar(
-            radius: 80.0,
-            backgroundColor: Colors.transparent,
-            backgroundImage: AssetImage("assets/Images/HyperSafety_Logo.png")),
-      ],
+    return FlatButton(
+      color: Colors.transparent,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: MediaQuery.of(context).size.width * 0.3,
+        child: Image.asset(
+          "assets/Images/Logo.png",
+        ),
+      ),
+      onPressed: () {
+        _launchURL();
+      },
     );
   }
 
@@ -247,5 +256,15 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  _launchURL() async {
+    const url = "https://www.aceneutrino.com";
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+    else {
+      showSnackBar(context, "Error - Try Again Later.", Colors.red);
+    }
   }
 }

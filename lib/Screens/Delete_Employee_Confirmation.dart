@@ -50,9 +50,10 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
     return CircleAvatar(
       radius: 80,
       backgroundColor: Colors.white,
+      backgroundImage: AssetImage("assets/GIFs/Loading_blue.gif"),
       child: CircleAvatar(
           radius: 78,
-          backgroundColor: Color(0xFF004e92),
+          backgroundColor: Colors.transparent,
           backgroundImage: NetworkImage(_imageURL!)),
     );
   }

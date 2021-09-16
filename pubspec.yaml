@@ -45,6 +45,8 @@ flutter:
     - assets/Images/Reset_Records.png
     - assets/Images/Default_Emp_Image.png
     - assets/Images/HyperSafety_Logo.png
+    - assets/GIFs/Loading_blue.gif
+    - assets/GIFs/Loading_white.gif
 
   fonts:
     - family: OpenSans

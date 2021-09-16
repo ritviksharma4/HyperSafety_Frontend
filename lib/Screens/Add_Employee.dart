@@ -276,7 +276,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen>
                         Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: EdgeInsets.only(left: 15),
                               child: IconButton(
                                 padding: EdgeInsets.zero,
                                 constraints: BoxConstraints(),
@@ -292,7 +292,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen>
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(right: 35.5),
+                                padding: const EdgeInsets.only(right: 30.5),
                                 child: Text(
                                   "Add Employee",
                                   textAlign: TextAlign.center,

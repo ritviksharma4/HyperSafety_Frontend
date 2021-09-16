@@ -48,8 +48,8 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
 
   Widget _addImgCircleAvatar() {
     return CircleAvatar(
-      radius: 80,
-      backgroundColor: Colors.white,
+      radius: 77,
+      backgroundColor: Colors.transparent,
       backgroundImage: AssetImage("assets/GIFs/Loading_blue.gif"),
       child: CircleAvatar(
           radius: 78,
@@ -311,7 +311,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
                       Row(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.only(left: 15),
                             child: IconButton(
                               padding: EdgeInsets.zero,
                               constraints: BoxConstraints(),
@@ -328,7 +328,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 35.5),
+                              padding: const EdgeInsets.only(right: 30.5),
                               child: Text(
                                 "Confirmation",
                                 textAlign: TextAlign.center,

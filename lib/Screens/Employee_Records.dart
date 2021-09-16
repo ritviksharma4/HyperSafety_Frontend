@@ -207,7 +207,7 @@ class _FetchEmployeeRecordsScreenState
                       Row(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.only(left: 15),
                             child: IconButton(
                               padding: EdgeInsets.zero,
                               constraints: BoxConstraints(),
@@ -223,7 +223,7 @@ class _FetchEmployeeRecordsScreenState
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 35.5),
+                              padding: const EdgeInsets.only(right: 30.5),
                               child: Text(
                                 "Employee Records",
                                 textAlign: TextAlign.center,
@@ -239,7 +239,8 @@ class _FetchEmployeeRecordsScreenState
                         ],
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+                        height: MediaQuery.of(context).size.height -
+                            kBottomNavigationBarHeight,
                         child: SingleChildScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(

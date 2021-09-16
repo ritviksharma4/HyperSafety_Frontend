@@ -215,7 +215,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                       Row(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.only(left: 15),
                             child: IconButton(
                               padding: EdgeInsets.zero,
                               constraints: BoxConstraints(),
@@ -232,7 +232,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 25.5),
+                              padding: const EdgeInsets.only(right: 30.5),
                               child: Text(
                                 "Reset Records",
                                 //https://stackoverflow.com/questions/51587003/how-to-center-only-one-element-in-a-row-of-2-elements-in-flutter

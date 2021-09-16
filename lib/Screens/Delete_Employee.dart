@@ -141,7 +141,8 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                 });
                 _navigateToNextScreen(context, DeleteConfirmationScreen());
               } else if (node_response == "Go To Login Page.") {
-                _navigateToNextScreen(context, LoginScreen());
+                // _navigateToNextScreen(context, LoginScreen());
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 showSnackBar(context, "Session Expired - Please Login Again.",
                     Colors.red);
               } else {

@@ -205,8 +205,9 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen>
                 ),
                 onPressed: () {
                   setState(() {
-                    _navigateToNextScreen(
-                        context, ResetRecords.ResetRecordScreen());
+                    // _navigateToNextScreen(
+                    //     context, ResetRecords.ResetRecordScreen());
+                    Navigator.pop(context);
                   });
                 },
                 padding: EdgeInsets.all(15.0),
@@ -252,13 +253,15 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen>
                   if (node_response == "Record Reset Successfully.") {
                     showSnackBar(context, node_response, Colors.green);
                     ResetRecords.ResetRecordScreen.reset_screen();
-                    _navigateToNextScreen(
-                        context, ResetRecords.ResetRecordScreen());
+                    Navigator.pop(context);
+                    // _navigateToNextScreen(
+                    //     context, ResetRecords.ResetRecordScreen());
                   } else {
                     showSnackBar(context, node_response, Colors.red);
                     setState(() {
-                      _navigateToNextScreen(
-                          context, ResetRecords.ResetRecordScreen());
+                      // _navigateToNextScreen(
+                      //     context, ResetRecords.ResetRecordScreen());
+                      Navigator.pop(context);
                     });
                   }
                 },
@@ -320,8 +323,9 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen>
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                _navigateToNextScreen(
-                                    context, ResetRecords.ResetRecordScreen());
+                                Navigator.pop(context);
+                                // _navigateToNextScreen(
+                                //     context, ResetRecords.ResetRecordScreen());
                               },
                             ),
                           ),

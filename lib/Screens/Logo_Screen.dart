@@ -13,7 +13,7 @@ class _LogoScreenState extends State<LogoScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 500), () {
+    Timer(Duration(milliseconds: 750), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });

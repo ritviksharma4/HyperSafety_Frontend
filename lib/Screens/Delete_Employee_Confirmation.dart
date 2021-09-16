@@ -206,8 +206,9 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
                 ),
                 onPressed: () {
                   setState(() {
-                    _navigateToNextScreen(
-                        context, DeleteEmployee.DeleteEmployeeScreen());
+                    Navigator.pop(context);
+                    // _navigateToNextScreen(
+                    //     context, DeleteEmployee.DeleteEmployeeScreen());
                   });
                 },
                 padding: EdgeInsets.all(15.0),
@@ -253,13 +254,15 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
                   if (node_response == "Employee Successfully Deleted.") {
                     showSnackBar(context, node_response, Colors.green);
                     DeleteEmployee.DeleteEmployeeScreen.reset_screen();
-                    _navigateToNextScreen(
-                        context, DeleteEmployee.DeleteEmployeeScreen());
+                    // _navigateToNextScreen(
+                    //     context, DeleteEmployee.DeleteEmployeeScreen());
+                    Navigator.pop(context);
                   } else {
                     showSnackBar(context, node_response, Colors.red);
                     setState(() {
-                      _navigateToNextScreen(
-                          context, DeleteEmployee.DeleteEmployeeScreen());
+                      // _navigateToNextScreen(
+                      //     context, DeleteEmployee.DeleteEmployeeScreen());
+                      Navigator.pop(context);
                     });
                   }
                 },
@@ -321,8 +324,9 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                _navigateToNextScreen(context,
-                                    DeleteEmployee.DeleteEmployeeScreen());
+                                Navigator.pop(context);
+                                // _navigateToNextScreen(context,
+                                //     DeleteEmployee.DeleteEmployeeScreen());
                               },
                             ),
                           ),

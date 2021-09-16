@@ -37,8 +37,7 @@ class _FetchEmployeeRecordsScreenState
 
     if (node_response is String) {
       if (node_response == "Go To Login Page.") {
-        // _navigateToNextScreen(context, LoginScreen());
-        Navigator.of(context).popUntil((route) => route.isFirst);
+        _navigateToNextScreen(context, LoginScreen());
         node_response = "Session Expired - Please Login Again.";
       }
       showSnackBar(context, node_response, Colors.red);
@@ -218,8 +217,7 @@ class _FetchEmployeeRecordsScreenState
                                 size: 25.5,
                               ),
                               onPressed: () {
-                                // _navigateToNextScreen(context, HomeScreen());
-                                Navigator.pop(context);
+                                _navigateToNextScreen(context, HomeScreen());
                               },
                             ),
                           ),

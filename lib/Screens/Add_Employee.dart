@@ -205,8 +205,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen>
               showSnackBar(context, node_response, Colors.green);
               reset_screen();
             } else if (node_response == "Go To Login Page.") {
-              // _navigateToNextScreen(context, LoginScreen());
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              _navigateToNextScreen(context, LoginScreen());
               showSnackBar(
                   context, "Session Expired - Please Login Again.", Colors.red);
             } else {

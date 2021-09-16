@@ -11,8 +11,8 @@ import 'package:path/path.dart';
 import 'package:HyperSafety/Emp_Model/Employee.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-var host_ip = "192.168.0.6"; //Vivek
-// var host_ip = "192.168.0.221"; //Akul
+// var host_ip = "192.168.0.6"; //Vivek
+var host_ip = "192.168.0.221"; //Akul
 // var host_ip = "192.168.0.6"; //Steve
 // var host_ip = "192.168.29.30"; //Ritvik
 // var host_ip = "192.168.0.6"; //Harsh

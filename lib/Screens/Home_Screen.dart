@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // BackButtonInterceptor.add(myInterceptor);
+    BackButtonInterceptor.add(myInterceptor);
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
@@ -206,104 +206,98 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF004e92),
-                        Color(0xFF00095b),
-                        Color(0xFF000742),
-                      ],
-                    ),
+    return Scaffold(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF004e92),
+                      Color(0xFF00095b),
+                      Color(0xFF000742),
+                    ],
                   ),
                 ),
-                Container(
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 70),
-                                child: Text(
-                                  "HyperSafety Services",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'OpenSans',
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+              ),
+              Container(
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 35.0, horizontal: 0.0),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 70),
+                              child: Text(
+                                "HyperSafety Services",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 30, 15),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                color: Colors.white,
-                                icon: Icon(
-                                  Icons.power_settings_new_rounded,
-                                  color: Colors.deepOrange,
-                                  size: 40,
-                                ),
-                                onPressed: () {
-                                  _navigateToNextScreen(context, LoginScreen());
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          child: SingleChildScrollView(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 40.0,
-                              vertical: 75.0,
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                _buildAddEmployeeBtn(),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10)),
-                                _buildDispEmployeebtn(),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10)),
-                                _buildResetRecordbtn(),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10)),
-                                _buildDelEmployeebtn(),
-                              ],
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 30, 15),
+                            child: IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              color: Colors.white,
+                              icon: Icon(
+                                Icons.power_settings_new_rounded,
+                                color: Colors.deepOrange,
+                                size: 40,
+                              ),
+                              onPressed: () {
+                                _navigateToNextScreen(context, LoginScreen());
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 40.0,
+                            vertical: 75.0,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              _buildAddEmployeeBtn(),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
+                              _buildDispEmployeebtn(),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
+                              _buildResetRecordbtn(),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10)),
+                              _buildDelEmployeebtn(),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

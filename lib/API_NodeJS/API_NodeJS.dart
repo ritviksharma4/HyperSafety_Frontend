@@ -13,10 +13,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     as FlutterSecureStorage;
 import 'package:dio/dio.dart';
 
-var host_ip = "192.168.0.6"; //Vivek
+// var host_ip = "192.168.0.6"; //Vivek
 // var host_ip = "192.168.0.221"; //Akul
 // var host_ip = "192.168.0.6"; //Steve
-// var host_ip = "192.168.29.30"; //Ritvik
+var host_ip = "192.168.29.30"; //Ritvik
 // var host_ip = "192.168.0.6"; //Harsh
 
 BaseOptions options = new BaseOptions(
@@ -50,11 +50,11 @@ admin_login(String admin_email, String admin_pass) async {
     if (e.response != null) {
       return e.response.toString();
     } else {
-      return "Unable to Connect to Server - Try Again Later.";
+      return "Unable to Connect to Server - Try Again.";
     }
   } catch (e) {
     print(e);
-    return "Unexpected Error Occured - Try Again Later.";
+    return "Unexpected Error Occured - Try Again.";
   }
 }
 
@@ -106,8 +106,7 @@ upload_image(File imageFile, String empName, String empID) async {
         return success_message;
       }
     } catch (e) {
-      print("Error in add employee: " + e.toString());
-      return "Unexpected Error Occured - Try Again Later.";
+      return "Unexpected Error Occured - Try Again.";
     }
   } else {
     return ping;
@@ -144,11 +143,11 @@ delete_employee(String empName, String empID) async {
     if (e.response != null) {
       return e.response.toString();
     } else {
-      return "Unable to Connect to Server - Try Again Later.";
+      return "Unable to Connect to Server - Try Again.";
     }
   } catch (e) {
     print(e);
-    return "Unexpected Error Occured - Try Again Later.";
+    return "Unexpected Error Occured - Try Again.";
   }
 }
 
@@ -183,11 +182,11 @@ reset_records(String empName, String empID) async {
     if (e.response != null) {
       return e.response.toString();
     } else {
-      return "Unable to Connect to Server - Try Again Later.";
+      return "Unable to Connect to Server - Try Again.";
     }
   } catch (e) {
     print(e);
-    return "Unexpected Error Occured - Try Again Later.";
+    return "Unexpected Error Occured - Try Again.";
   }
 }
 
@@ -231,11 +230,11 @@ display_records(bool showAll) async {
     if (e.response != null) {
       return e.response.toString();
     } else {
-      return "Unable to Connect to Server - Try Again Later.";
+      return "Unable to Connect to Server - Try Again.";
     }
   } catch (e) {
     print(e);
-    return "Unexpected Error Occured - Try Again Later.";
+    return "Unexpected Error Occured - Try Again.";
   }
 }
 
@@ -272,11 +271,11 @@ fetch_specific_employee_records(String empName, String empID) async {
     if (e.response != null) {
       return e.response.toString();
     } else {
-      return "Unable to Connect to Server - Try Again Later.";
+      return "Unable to Connect to Server - Try Again.";
     }
   } catch (e) {
     print(e);
-    return "Unexpected Error Occured - Try Again Later.";
+    return "Unexpected Error Occured - Try Again.";
   }
 }
 

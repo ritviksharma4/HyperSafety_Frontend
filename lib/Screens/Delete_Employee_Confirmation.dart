@@ -29,8 +29,6 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
   TextEditingController _empId = TextEditingController();
   TextEditingController _empWarnings = TextEditingController();
 
-  EdgeInsets padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0);
-
   @override
   void initState() {
     super.initState();
@@ -390,10 +388,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
       backgroundColor: status,
       duration: Duration(seconds: 2, milliseconds: 560), //default is 4s
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then(
-          (reason) =>
-              padding_snackbar = EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-        );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void _navigateToNextScreen(BuildContext context, NewScreen) {

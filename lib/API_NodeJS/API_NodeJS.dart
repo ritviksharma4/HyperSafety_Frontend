@@ -13,10 +13,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     as FlutterSecureStorage;
 import 'package:dio/dio.dart';
 
-// var host_ip = "192.168.0.6"; //Vivek
+var host_ip = "192.168.0.6"; //Vivek
 // var host_ip = "192.168.0.221"; //Akul
 // var host_ip = "192.168.0.6"; //Steve
-var host_ip = "192.168.29.30"; //Ritvik
+// var host_ip = "192.168.29.30"; //Ritvik
 // var host_ip = "192.168.0.6"; //Harsh
 
 BaseOptions options = new BaseOptions(
@@ -58,48 +58,59 @@ admin_login(String admin_email, String admin_pass) async {
   }
 }
 
-upload_image(File imageFile, String empName, String empID) async {
-  final jwt_storage = new FlutterSecureStorage.FlutterSecureStorage();
-  final _readJWTToken = await jwt_storage.read(key: "jwt");
-
-  var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-  var length = await imageFile.length();
-
-  var uri = dio.options.baseUrl + "/employee_services";
-  print("FILE PATH : " + imageFile.path);
+ping_node_server() async {
+  var uri = dio.options.baseUrl + "/ping";
+  var node_response;
   try {
-    var formData = FormData.fromMap({
-      "empName": empName,
-      "empID": empID,
-      "employee_image": await MultipartFile.fromFile(imageFile.path)
-    });
-    Map<String, dynamic> upload_header = new Map<String, dynamic>();
-    upload_header["x-access-token"] = _readJWTToken;
-    Response response = await dio.post(
-      uri,
-      data: formData,
-      options: Options(headers: upload_header),
-    );
-    print("Response = " + response.toString());
-
-    if (response.statusCode == 401) {
-      return "Go To Login Page.";
-    } else if (response.statusCode != 200) {
-      var error_message = response.data;
-      return error_message;
-    } else {
-      var success_message = "Employee Added Successfully.";
-      return success_message;
-    }
-  } on DioError catch (e) {
-    if (e.response != null) {
-      return e.response.toString();
-    } else {
-      return "Unable to Connect to Server - Try Again Later.";
-    }
+    node_response = (await dio.get(uri)).data;
   } catch (e) {
     print(e);
-    return "Unexpected Error Occured - Try Again Later.";
+    node_response = "Server Down - Please Try Again Later.";
+  }
+
+  return node_response;
+}
+
+upload_image(File imageFile, String empName, String empID) async {
+  var ping = await ping_node_server();
+  if (ping == "Server is up.") {
+    final jwt_storage = new FlutterSecureStorage.FlutterSecureStorage();
+    final _readJWTToken = await jwt_storage.read(key: "jwt");
+
+    var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+
+    var uri =
+        Uri.parse("http://" + "192.168.0.6" + ":7091/api/employee_services");
+
+    try {
+      var request = http.MultipartRequest("POST", uri);
+      request.headers["x-access-token"] = _readJWTToken;
+      request.fields["empName"] = empName;
+      request.fields["empID"] = empID;
+
+      var multipartFile = http.MultipartFile(
+          'employee_image', imageFile.openRead(), length,
+          filename: basename(imageFile.path));
+
+      request.files.add(multipartFile);
+
+      var response = await request.send();
+      if (response.statusCode == 401) {
+        return "Go To Login Page.";
+      } else if (response.statusCode != 200) {
+        var error_message = response.stream.bytesToString();
+        return error_message;
+      } else {
+        var success_message = "Employee Added Successfully.";
+        return success_message;
+      }
+    } catch (e) {
+      print("Error in add employee: " + e.toString());
+      return "Unexpected Error Occured - Try Again Later.";
+    }
+  } else {
+    return ping;
   }
 }
 

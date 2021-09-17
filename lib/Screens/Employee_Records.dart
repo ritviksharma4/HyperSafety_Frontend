@@ -1,5 +1,5 @@
 // ignore: file_names
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, unused_import, avoid_unnecessary_containers, unnecessary_this, unnecessary_string_interpolations, duplicate_import
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, unused_import, avoid_unnecessary_containers, unnecessary_this, unnecessary_string_interpolations, duplicate_import, unnecessary_new
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,8 +15,9 @@ class FetchEmployeeRecordsScreen extends StatefulWidget {
       _FetchEmployeeRecordsScreenState();
 }
 
-class _FetchEmployeeRecordsScreenState
-    extends State<FetchEmployeeRecordsScreen> {
+class _FetchEmployeeRecordsScreenState extends State<FetchEmployeeRecordsScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
   List<Employee> employees = [];
   int? sortColumnIndex;
   bool isAscending = false;
@@ -27,13 +28,29 @@ class _FetchEmployeeRecordsScreenState
   @override
   void initState() {
     super.initState();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController!.repeat();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _acceptNodeResponse(showAll);
     });
   }
 
   _acceptNodeResponse(bool showAll) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: animationController!.drive(ColorTween(
+                  begin: Colors.lightBlue[600],
+                  end: Colors.lightGreenAccent[400])),
+            ),
+          );
+        });
     var node_response = await display_records(showAll);
+    Navigator.pop(context);
 
     if (node_response is String) {
       if (node_response == "Go To Login Page.") {

@@ -23,7 +23,9 @@ class DeleteEmployeeScreen extends StatefulWidget {
   _DeleteEmployeeScreenState createState() => _DeleteEmployeeScreenState();
 }
 
-class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
+class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
   TextEditingController _empName = TextEditingController();
   TextEditingController _empId = TextEditingController();
   String _empWarnings = "";
@@ -31,6 +33,9 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
   @override
   void initState() {
     super.initState();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController!.repeat();
     setState(() {
       _empName.text = DeleteEmployeeScreen.specific_empName;
       _empId.text = DeleteEmployeeScreen.specific_empId;
@@ -124,6 +129,18 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
           splashColor: Colors.lightGreenAccent,
           elevation: 15.0,
           onPressed: () async {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: animationController!.drive(ColorTween(
+                          begin: Colors.lightBlue[600],
+                          end: Colors.lightGreenAccent[400])),
+                    ),
+                  );
+                });
             if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
               var node_response = await fetch_specific_employee_records(
                   _empName.text.trimRight().toLowerCase(),
@@ -139,15 +156,19 @@ class _DeleteEmployeeScreenState extends State<DeleteEmployeeScreen> {
                   DeleteEmployeeScreen.specific_empImageURL =
                       node_response["ImageURL"].toString();
                 });
+                Navigator.pop(context);
                 _navigateToNextScreen(context, DeleteConfirmationScreen());
               } else if (node_response == "Go To Login Page.") {
+                Navigator.pop(context);
                 _navigateToNextScreen(context, LoginScreen());
                 showSnackBar(context, "Session Expired - Please Login Again.",
                     Colors.red);
               } else {
+                Navigator.pop(context);
                 showSnackBar(context, node_response, Colors.red);
               }
             } else {
+              Navigator.pop(context);
               if (_empName.text.isEmpty) {
                 showSnackBar(context, "Name Field is Required.", Colors.red);
               } else if (_empId.text.isEmpty) {

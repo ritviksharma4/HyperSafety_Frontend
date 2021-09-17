@@ -1,5 +1,5 @@
 // ignore: file_names
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields, unused_field
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields, unused_field, unnecessary_new
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +23,9 @@ class ResetRecordScreen extends StatefulWidget {
   _ResetRecordScreenState createState() => _ResetRecordScreenState();
 }
 
-class _ResetRecordScreenState extends State<ResetRecordScreen> {
+class _ResetRecordScreenState extends State<ResetRecordScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
   TextEditingController _empName = TextEditingController();
   TextEditingController _empId = TextEditingController();
   String _empWarnings = "";
@@ -31,6 +33,9 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
   @override
   void initState() {
     super.initState();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController!.repeat();
     setState(() {
       _empName.text = ResetRecordScreen.specific_empName;
       _empId.text = ResetRecordScreen.specific_empId;
@@ -127,6 +132,18 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
           splashColor: Colors.lightGreenAccent,
           elevation: 15.0,
           onPressed: () async {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: animationController!.drive(ColorTween(
+                          begin: Colors.lightBlue[600],
+                          end: Colors.lightGreenAccent[400])),
+                    ),
+                  );
+                });
             if (_empName.text.isNotEmpty && _empId.text.isNotEmpty) {
               var node_response = await fetch_specific_employee_records(
                   _empName.text.trimRight().toLowerCase(),
@@ -142,15 +159,19 @@ class _ResetRecordScreenState extends State<ResetRecordScreen> {
                   ResetRecordScreen.specific_empImageURL =
                       node_response["ImageURL"].toString();
                 });
+                Navigator.pop(context);
                 _navigateToNextScreen(context, ResetConfirmationScreen());
               } else if (node_response == "Go To Login Page.") {
+                Navigator.pop(context);
                 _navigateToNextScreen(context, LoginScreen());
                 showSnackBar(context, "Session Expired - Please Login Again.",
                     Colors.red);
               } else {
+                Navigator.pop(context);
                 showSnackBar(context, node_response, Colors.red);
               }
             } else {
+              Navigator.pop(context);
               if (_empName.text.isEmpty) {
                 showSnackBar(context, "Name Field is Required.", Colors.red);
               } else if (_empId.text.isEmpty) {

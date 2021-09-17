@@ -9,7 +9,6 @@ import 'package:HyperSafety/Utilities/Utilities.dart';
 import 'package:HyperSafety/Screens/Home_Screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -260,10 +259,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _launchURL() async {
     const url = "https://www.aceneutrino.com";
-    if(await canLaunch(url)){
+    if (await canLaunch(url)) {
       await launch(url);
-    }
-    else {
+    } else {
       showSnackBar(context, "Error - Try Again Later.", Colors.red);
     }
   }

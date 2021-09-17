@@ -80,8 +80,7 @@ upload_image(File imageFile, String empName, String empID) async {
     var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    var uri =
-        Uri.parse("http://" + "192.168.0.6" + ":7091/api/employee_services");
+    var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
 
     try {
       var request = http.MultipartRequest("POST", uri);
@@ -141,7 +140,11 @@ delete_employee(String empName, String empID) async {
     }
   } on DioError catch (e) {
     if (e.response != null) {
-      return e.response.toString();
+      if (e.response.statusCode == 401 || e.response.statusCode == 403) {
+        return "Go To Login Page.";
+      } else {
+        return e.response.toString();
+      }
     } else {
       return "Unable to Connect to Server - Try Again.";
     }
@@ -167,7 +170,6 @@ reset_records(String empName, String empID) async {
       data: body,
       options: Options(headers: reset_header),
     );
-    print("Response = " + response.toString());
 
     if (response.statusCode == 401) {
       return "Go To Login Page.";
@@ -180,7 +182,11 @@ reset_records(String empName, String empID) async {
     }
   } on DioError catch (e) {
     if (e.response != null) {
-      return e.response.toString();
+      if (e.response.statusCode == 401 || e.response.statusCode == 403) {
+        return "Go To Login Page.";
+      } else {
+        return e.response.toString();
+      }
     } else {
       return "Unable to Connect to Server - Try Again.";
     }
@@ -220,15 +226,14 @@ display_records(bool showAll) async {
         list_emp.add(node_resp_emp);
       });
       return list_emp;
-    } else if (response.statusCode == 401) {
-      return "Go To Login Page.";
-    } else {
-      var error_message = response_body;
-      return (error_message);
     }
   } on DioError catch (e) {
     if (e.response != null) {
-      return e.response.toString();
+      if (e.response.statusCode == 401 || e.response.statusCode == 403) {
+        return "Go To Login Page.";
+      } else {
+        return e.response.toString();
+      }
     } else {
       return "Unable to Connect to Server - Try Again.";
     }
@@ -262,6 +267,7 @@ fetch_specific_employee_records(String empName, String empID) async {
         return "Employee Not Found - Check the Details.";
       }
     } else if (response.statusCode == 401) {
+      print(response.statusMessage);
       return "Go To Login Page.";
     } else {
       var error_message = response_body;
@@ -269,7 +275,11 @@ fetch_specific_employee_records(String empName, String empID) async {
     }
   } on DioError catch (e) {
     if (e.response != null) {
-      return e.response.toString();
+      if (e.response.statusCode == 401 || e.response.statusCode == 403) {
+        return "Go To Login Page.";
+      } else {
+        return e.response.toString();
+      }
     } else {
       return "Unable to Connect to Server - Try Again.";
     }

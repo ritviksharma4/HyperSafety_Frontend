@@ -225,7 +225,6 @@ class _ResetRecordScreenState extends State<ResetRecordScreen>
                 ),
               ),
               Container(
-                // height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding:

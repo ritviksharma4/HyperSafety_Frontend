@@ -11,6 +11,7 @@ import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:HyperSafety/Utilities/Utilities.dart';
 import 'package:HyperSafety/Screens/Delete_Employee.dart' as DeleteEmployee;
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 
 class DeleteConfirmationScreen extends StatefulWidget {
   @override
@@ -248,7 +249,13 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
                   var node_response = await delete_employee(
                       _empName.text.toLowerCase(), _empId.text);
                   Navigator.pop(context);
-                  if (node_response == "Employee Successfully Deleted.") {
+                  if (node_response == "Go To Login Page.") {
+                    showSnackBar(context,
+                        "Session Expired - Please Login Again.", Colors.red);
+                    DeleteEmployee.DeleteEmployeeScreen.reset_screen();
+                    _navigateToNextScreen(context, LoginScreen());
+                  } else if (node_response ==
+                      "Employee Successfully Deleted.") {
                     showSnackBar(context, node_response, Colors.green);
                     DeleteEmployee.DeleteEmployeeScreen.reset_screen();
                     _navigateToNextScreen(

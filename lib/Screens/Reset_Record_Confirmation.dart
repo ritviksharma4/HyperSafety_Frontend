@@ -10,6 +10,7 @@ import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
 import 'package:async/async.dart';
 import 'package:HyperSafety/Utilities/Utilities.dart';
 import 'package:HyperSafety/Screens/Reset_Record.dart' as ResetRecords;
+import 'package:HyperSafety/Screens/Login_Screen.dart';
 
 class ResetConfirmationScreen extends StatefulWidget {
   @override
@@ -255,7 +256,12 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen>
                   var node_response =
                       await reset_records(_empName.text, _empId.text);
                   Navigator.pop(context);
-                  if (node_response == "Record Reset Successfully.") {
+                  if (node_response == "Go To Login Page.") {
+                    showSnackBar(context,
+                        "Session Expired - Please Login Again.", Colors.red);
+                    ResetRecords.ResetRecordScreen.reset_screen();
+                    _navigateToNextScreen(context, LoginScreen());
+                  } else if (node_response == "Record Reset Successfully.") {
                     showSnackBar(context, node_response, Colors.green);
                     ResetRecords.ResetRecordScreen.reset_screen();
                     _navigateToNextScreen(

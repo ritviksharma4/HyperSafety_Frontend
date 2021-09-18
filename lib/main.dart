@@ -8,7 +8,6 @@ import 'package:HyperSafety/Screens/Employee_Records.dart';
 import 'package:HyperSafety/Screens/Reset_Record.dart';
 import 'package:HyperSafety/Screens/Login_Screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:HyperSafety/Screens/Logo_Screen.dart';
 
 // flutter pub run flutter_launcher_icons:main
 // flutter run --no-sound-null-safety
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
           bottomSheetTheme:
               BottomSheetThemeData(backgroundColor: Color(0xFF243b55))),
-      home: LogoScreen(),
+      home: LoginScreen(),
     );
   }
 }

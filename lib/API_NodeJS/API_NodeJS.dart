@@ -20,7 +20,7 @@ var host_ip = "192.168.29.30"; //Ritvik
 // var host_ip = "192.168.0.6"; //Harsh
 
 BaseOptions options = new BaseOptions(
-  baseUrl: "http://" + host_ip + ":7091/api",
+  baseUrl: "http://" + host_ip + ":7090/api",
   connectTimeout: 3000,
 );
 Dio dio = new Dio(options);
@@ -80,7 +80,7 @@ upload_image(File imageFile, String empName, String empID) async {
     var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    var uri = Uri.parse("http://" + host_ip + ":7091/api/employee_services");
+    var uri = Uri.parse("http://" + host_ip + ":7090/api/employee_services");
 
     try {
       var request = http.MultipartRequest("POST", uri);

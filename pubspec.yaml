@@ -12,6 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_native_splash: ^1.2.3
+
   
   cupertino_icons: ^1.0.2
   http: ^0.12.1
@@ -33,6 +35,14 @@ flutter_icons:
   image_path: "assets/Images/icon.png"
   android: true
   ios: true
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  background_image: "assets/Images/background.png"
+  image: assets/Images/launch_image.png
 
 
 # The following section is specific to Flutter.

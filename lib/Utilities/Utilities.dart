@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-// ignore: prefer_const_constructors
 final kHintTextStyle = TextStyle(
   color: Colors.white54,
   fontFamily: 'OpenSans',

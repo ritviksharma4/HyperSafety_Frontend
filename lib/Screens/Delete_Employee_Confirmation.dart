@@ -393,7 +393,7 @@ class _DeleteConfirmationScreenState extends State<DeleteConfirmationScreen>
         textScaleFactor: 1.3,
       ),
       backgroundColor: status,
-      duration: Duration(seconds: 2, milliseconds: 560), //default is 4s
+      duration: Duration(seconds: 2, milliseconds: 560),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

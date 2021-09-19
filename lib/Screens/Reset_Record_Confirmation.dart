@@ -58,7 +58,6 @@ class _ResetConfirmationScreenState extends State<ResetConfirmationScreen>
   Widget _addImgCircleAvatar() {
     return CircleAvatar(
       radius: 78,
-      // backgroundColor: Colors.transparent,
       backgroundImage:
           _isImageLoaded ? _image : AssetImage("assets/GIFs/Loading.gif"),
     );

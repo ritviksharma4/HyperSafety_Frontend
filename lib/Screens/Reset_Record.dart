@@ -1,4 +1,3 @@
-// ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, avoid_unnecessary_containers, prefer_final_fields, unused_field, unnecessary_new
 
 import 'package:flutter/material.dart';
@@ -319,7 +318,7 @@ class _ResetRecordScreenState extends State<ResetRecordScreen>
         textScaleFactor: 1.3,
       ),
       backgroundColor: status,
-      duration: Duration(seconds: 2, milliseconds: 560), //default is 4s
+      duration: Duration(seconds: 2, milliseconds: 560),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

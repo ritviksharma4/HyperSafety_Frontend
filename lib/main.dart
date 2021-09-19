@@ -17,14 +17,12 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'HyperSafety',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          // dividerColor: Colors.blueGrey,
           iconTheme: IconThemeData(color: Colors.white),
           bottomSheetTheme:
               BottomSheetThemeData(backgroundColor: Color(0xFF243b55))),

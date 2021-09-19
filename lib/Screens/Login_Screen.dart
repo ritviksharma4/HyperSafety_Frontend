@@ -1,7 +1,6 @@
-// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names
+// ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, avoid_print, file_names, prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_element, non_constant_identifier_names, unnecessary_new
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:HyperSafety/API_NodeJS/API_NodeJS.dart';
@@ -14,11 +13,22 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
   bool _obscureText = true;
 
   TextEditingController admin_email = TextEditingController();
   TextEditingController admin_pass = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController!.repeat();
+  }
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,9 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60.0,
           child: TextField(
             obscureText: _obscureText,
-
             controller: admin_pass,
-            // obscureText: true,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -120,11 +128,23 @@ class _LoginScreenState extends State<LoginScreen> {
         splashColor: Colors.lightGreenAccent,
         elevation: 15.0,
         onPressed: () async {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: animationController!.drive(ColorTween(
+                        begin: Colors.lightBlue[600],
+                        end: Colors.lightGreenAccent[400])),
+                  ),
+                );
+              });
           var login_response =
               await admin_login(admin_email.text, admin_pass.text);
+          Navigator.pop(context);
           if (login_response == "Login Successful.") {
             _navigateToNextScreen(context, HomeScreen());
-            // reset_fields();
           } else {
             showSnackBar(context, login_response, Colors.red);
           }

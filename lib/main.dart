@@ -10,6 +10,7 @@ import 'package:HyperSafety/Screens/Login_Screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // flutter pub run flutter_native_splash:create
+// flutter pub run flutter_launcher_icons:main
 // flutter run --no-sound-null-safety
 void main() {
   runApp(MyApp());

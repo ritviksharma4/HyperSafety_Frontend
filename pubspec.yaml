@@ -60,6 +60,7 @@ flutter:
     - assets/Images/Logo.png
     - assets/GIFs/Loading.gif
 
+
   fonts:
     - family: OpenSans
       fonts:

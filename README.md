@@ -15,12 +15,10 @@ To run the Frontend, make sure you have Flutter installed.
 
 Then, clone the Git Repository.
 
-### Run 
+### To install all the necessary dependencies.
 
     flutter pub get
     
-To install all the necessary dependencies.
+### To run the HyperSafety App.    
 
-    flutter run --no-sound-null-safety
-    
-To run the HyperSafety App.    
+    flutter run --no-sound-null-safety    

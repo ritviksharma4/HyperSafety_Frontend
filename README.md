@@ -15,7 +15,7 @@ To run the Frontend, make sure you have Flutter installed.
 
 Then, clone the Git Repository.
 
-### To install all the necessary dependencies.
+### To install all the necessary dependency.
 
     flutter pub get
     
